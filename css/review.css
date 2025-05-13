@@ -1,0 +1,301 @@
+* {
+	text-decoration: none;
+	color: #3c526b;
+}
+
+html {
+	background-color: rgb(249, 253, 255);
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+}
+
+.review {
+	margin-top: 10%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.login,.logout{
+	text-decoration: none;
+	color: black;
+}
+a{
+	text-decoration: none;
+}
+
+.exercisegif {
+	width: 40px;
+	height: 40px;
+	background-image: url(../images/exercise.gif);
+	background-repeat: no-repeat;
+	background-size: contain;
+	margin: 10px;
+	border-radius: 10px;
+}
+
+.header {
+	height: 50px;
+	padding: 0px 40px;
+	box-shadow: 5px 5px 10px #6385b924;
+	background-color: #ffffff;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.logo-box img {
+	height: 50px;
+	/* 로고 이미지의 높이를 고정 (필요에 따라 조정) */
+	width: auto;
+	/* 비율을 맞추기 위해 너비는 자동 조정 */
+}
+
+.user {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.user img {
+	height: 20px;
+	width: auto;
+}
+
+.header-right {
+	color: #495c92;
+	align-items: center;
+	font-weight: 600;
+	line-height: 0%;
+	font-size: 12px;
+
+	display: flex;
+	gap: 20px;
+	flex-direction: row;
+}
+
+h1 {
+	display: flex;
+	align-self: flex-end;
+	color: #3c526b;
+	padding: 0;
+	margin: 0;
+}
+
+hr {
+	margin-top: 40px;
+}
+
+body {
+	display: flex;
+	height: 100%;
+	justify-content: start;
+	flex-direction: column;
+	margin: 0;
+}
+
+.title,
+.content {
+	width: 100%;
+	margin: 10px;
+	border: 1px solid;
+	border-radius: 4px;
+	padding: 10px 8px;
+	overflow: hidden;
+	color: #3c526b;
+}
+
+input[type="text"] {
+	margin-top: 10px;
+	background-color: white;
+	border: hidden;
+	width: 100%;
+	height: 30px;
+	padding: 10px;
+	font-size: 20px;
+	box-sizing: border-box;
+	color: #3c526b;
+	background-color: rgb(249, 253, 255);
+}
+
+textarea {
+	padding: 10px;
+	width: 100%;
+	height: 200px;
+	font-size: 15px;
+	font-family: fantasy;
+	box-sizing: border-box;
+	resize: none;
+	border: none;
+	background-color: white;
+	color: #3c526b;
+	background-color: rgb(249, 253, 255);
+}
+
+input[type="button"] {
+	margin: 20px 4px;
+	padding: 5px 15px;
+	box-shadow: 3px 3px 3px #3456;
+	background-color: white;
+	align-self: flex-end;
+}
+
+input[type="submit"] {
+	margin: 20px 4px;
+	padding: 5px 15px;
+	box-shadow: 3px 3px 3px #3456;
+	background-color: white;
+	align-self: flex-end;
+	
+}
+
+input[type="submit"][name="enroll"] {
+	border: 1px solid #00f;
+	color: #00f;
+	border-radius: 10px;
+}
+
+input[type="button"][name="enroll"] {
+	border: 1px solid #00f;
+	color: #00f;
+	border-radius: 10px;
+}
+
+button {
+	margin: 20px 4px;
+	padding: 5px 15px;
+	box-shadow: 3px 3px 3px #3456;
+	background-color: white;
+	align-self: flex-end;
+}
+
+input[type="button"][name="cancel"] {
+	border: 1px solid #f00;
+	color: #f00;
+	border-radius: 10px;
+}
+
+.cancel {
+	border: 1px solid #f00;
+	color: #f00;
+	border-radius: 10px;
+}
+
+input[type="button"]:hover {
+	border: 1px solid #fff;
+	color: #fff;
+}
+
+.container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.iframe {
+	display: flex;
+	justify-content: center;
+}
+
+#search {
+	width: 300px;
+	display: inline;
+	border-bottom: 1px solid;
+	border-radius: 5px;
+}
+
+hr {
+	width: 100%;
+}
+
+.list {
+	width: 100%;
+	display: flex;
+}
+
+.num,
+.click {
+	width: 5%;
+	text-align: center;
+}
+
+.subject {
+	width: 50%;
+	text-align: center;
+}
+
+.time,
+.writer {
+	width: 20%;
+	text-align: center;
+}
+
+.list_line {
+	margin-top: 5px;
+	width: 98%;
+}
+
+.pagination {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.page {
+	font-style: italic;
+	font-size: large;
+	border: none;
+}
+
+.page:hover {
+	background-color: #00f5;
+}
+
+footer {
+	width: 100%;
+	display: flex;
+	background-color: #a2b0d1;
+	color: #eeeeee;
+	padding: 30px 20px;
+	flex-direction: column;
+}
+
+.footer-text {
+	justify-content: center;
+	display: flex;
+	flex-direction: row;
+	gap: 12px;
+}
+
+.footer-text p {
+	font-size: 9px;
+	color: #ffffff;
+}
+
+.footer-extra {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.footer-extra p {
+	font-size: 9px;
+	line-height: 9px;
+	margin: 0;
+}
+
+.container-body {
+	flex-grow: 1;
+}
+
+.forEach, .if {
+	width: 100%;
+}
+
+.first {
+	display: inline-block;
+}

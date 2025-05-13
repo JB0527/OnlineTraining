@@ -1,0 +1,159 @@
+html,
+body {
+	height: 100%;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	flex-grow: 1;
+	margin-bottom: 20px;
+}
+
+.header {
+	height: 50px;
+	padding: 0px 40px;
+	box-shadow: 5px 5px 10px #6385b924;
+	background-color: #ffffff;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.logo-box img {
+	height: 50px;
+	/* 로고 이미지의 높이를 고정 (필요에 따라 조정) */
+	width: auto;
+	/* 비율을 맞추기 위해 너비는 자동 조정 */
+}
+
+.user img {
+	height: 20px;
+	width: auto;
+}
+
+.header-right {
+	color: #495c92;
+	align-items: center;
+	font-weight: 600;
+	line-height: 0%;
+	font-size: 12px;
+
+	display: flex;
+	gap: 20px;
+	flex-direction: row;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+	font-weight: 600;
+}
+
+#부위 {
+	border-radius: 5px;
+	font-size: 14px;
+	height: 25px;
+	width: 50px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	padding: 0;
+	border: none;
+	background-color: #a2b0d1;
+}
+
+#searchbar {
+	box-shadow: 5px 5px 10px #6385b924;
+	height: 50px;
+	margin-top: 20px;
+	padding-top: 10px;
+	border: 1px solid #7985a566;
+	border-radius: 10px;
+	align-items: center;
+}
+
+#leftarrow {
+	width: 10vw;
+	/* 화면 너비의 10% */
+	max-width: 50px;
+	/* 최대 크기 제한 */
+	height: auto;
+}
+
+#searchbar input {
+	flex-grow: 1;
+	margin-left: 10px;
+	outline: none;
+	border: none;
+}
+
+#최근영상 box col-1 {
+	align-items: center;
+}
+
+#searchbar img {
+	margin-top: 5px;
+}
+
+#제목 {
+	margin-left: 0px;
+}
+
+#최근영상,
+#운동부위 {
+	margin-top: 30px;
+	border: 1px solid #a2b0d1;
+	border-radius: 10px;
+}
+
+#최근영상,
+#운동부위 {
+	padding: 10px;
+	box-shadow: 3px 3px 3px 4px rgba(186, 194, 202, 0.3);
+}
+
+/* input.tag {
+  border: none;
+  background-color: #a2b0d1;
+  border-radius: 10px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+} */
+
+footer {
+	display: flex;
+	width: 100%;
+	background-color: #a2b0d1;
+	color: #eeeeee;
+	padding: 30px 20px;
+	flex-direction: column;
+}
+
+.footer-text {
+	justify-content: center;
+	display: flex;
+	flex-direction: row;
+	gap: 12px;
+}
+
+.footer-text p {
+	font-size: 9px;
+	color: #ffffff;
+}
+
+.footer-extra {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.footer-extra p {
+	font-size: 9px;
+	line-height: 9px;
+	margin: 0;
+}

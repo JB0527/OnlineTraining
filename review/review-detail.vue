@@ -1,19 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>리뷰 상세</title>
+<template>
+	<div>
 
-<!-- bootstrap cdn css -->
+	</div>
+</template>
+
+<script setup>
+
+</script>
+
+<style scoped>
+
+
+</style>
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-	crossorigin="anonymous">
+	crossorigin="anonymous"></link>
 
-<!-- css -->
-<link rel="stylesheet" href="${contextRoot}/css/review.css">
-</head>
+
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous"></link>
+
+<link rel="stylesheet" href="./css/review.css"></link>
+<!--
 <body>
 	<header>
 		<div class=" header">
@@ -99,5 +114,4 @@
 				제0000-0000000-00-0-00000호</p>
 		</div>
 	</footer>
-</body>
-</html>
+</body> -->

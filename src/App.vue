@@ -2,21 +2,7 @@
   <div>
     <!-- 헤더 -->
     <header>
-      <div class="header d-flex justify-content-between align-items-center p-3">
-        <div class="logo-box">
-          <a href="/"><img class="logo" src="./assets/images/logo.png" alt="Logo" /></a>
-        </div>
-        <div class="header-right d-flex align-items-center gap-3">
-          <div>
-            <a v-if="!isLoggedIn" href="/login">로그인</a>
-            <a v-else href="/logout">로그아웃</a>
-          </div>
-          <div>헬스장 찾기</div>
-          <div class="user">
-            <img src="./assets/images/user.png" alt="User" />
-          </div>
-        </div>
-      </div>
+      <Header />
     </header>
 
     <!-- 검색창 -->
@@ -80,22 +66,17 @@
 
     <!-- 푸터 -->
     <footer class="mt-5 p-4 bg-light">
-      <div class="footer-text mb-2">
-        <p>고객센터</p>
-        <p>서비스 이용약관</p>
-        <p>개인정보 처리방침</p>
-        <p>도움말</p>
-      </div>
-      <div class="footer-extra text-secondary small">
-        <p><b>SSAFIT 대표 : 옥준</b></p>
-        <p>서울특별시 강남구 테헤란로 212 멀티캠퍼스 역삼 504</p>
-        <p>사업자등록번호 : 000-00-00000 유료직업소개사업등록번호: 제0000-0000000-00-0-00000호</p>
-      </div>
+      <Footer />
     </footer>
   </div>
 </template>
 
+<script setup>
+import Header from '@/components/section/Header.vue';
+import Footer from '@/components/section/Footer.vue';
+</script>
 <script>
+
 export default {
   data() {
     return {
@@ -142,6 +123,7 @@ export default {
     },
   },
 };
+
 </script>
 
 <style scoped>

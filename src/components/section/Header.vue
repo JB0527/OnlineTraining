@@ -8,7 +8,6 @@
             <a v-if="!isLoggedIn" href="/login">로그인</a>
             <a v-else href="/logout">로그아웃</a>
           </div>
-          <div>헬스장 찾기</div>
           <div class="user">
             <img src="../../assets/images/user.png" alt="User" />
           </div>

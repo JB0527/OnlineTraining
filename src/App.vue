@@ -3,76 +3,25 @@
     <!-- 헤더 -->
     <header>
       <Header />
+      
+      
     </header>
 
     <!-- 검색창 -->
     <main>
-      <div class="container my-3" id="searchbar">
-        <form @submit.prevent="onSearch">
-          <div class="d-flex align-items-center gap-2">
-            <img src="./assets/images/search.png" alt="Search" />
-            <input
-              v-model="searchQuery"
-              class="form-control"
-              type="text"
-              placeholder="운동 제목 검색"
-              name="content"
-            />
-          </div>
-        </form>
-      </div>
-
-      <!-- 최근 영상 -->
-      <div class="container" id="최근영상">
-        <h5 class="fw-semibold text-primary">최근 가장 많이 본 영상</h5>
-        <div class="row">
-          <div class="box col-4" v-for="(exer, index) in exers.slice(0, 3)" :key="index">
-            <div class="ratio ratio-16x9">
-              <iframe :src="exer.url" allowfullscreen></iframe>
-            </div>
-            <div class="row" id="제목">
-              <a :href="`/review?videoId=${exer.videoId}`">{{ exer.title }}</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 운동 부위 선택 -->
-      <div class="container mt-5" id="운동부위">
-        <h5 class="fw-semibold text-primary">운동 부위 선택</h5>
-        <div class="mb-3">
-          <a href="#" @click.prevent="selectedPart = 'all'">전체</a>
-          <a href="#" @click.prevent="selectedPart = 'whole'">전신</a>
-          <a href="#" @click.prevent="selectedPart = 'upper'">상체</a>
-          <a href="#" @click.prevent="selectedPart = 'lower'">하체</a>
-          <a href="#" @click.prevent="selectedPart = 'abdomen'">복부</a>
-        </div>
-        <div class="row">
-          <div
-            class="box col-4"
-            v-for="(exer, index) in filteredExers"
-            :key="index"
-          >
-            <div class="ratio ratio-16x9">
-              <iframe :src="exer.url" allowfullscreen></iframe>
-            </div>
-            <div class="row" id="제목">
-              <a :href="`/review?videoId=${exer.videoId}`">{{ exer.title }}</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Video />
     </main>
 
-    <!-- 푸터 -->
-    <footer class="mt-5 p-4 bg-light">
+    <footer>
       <Footer />
     </footer>
+
   </div>
 </template>
 
 <script setup>
 import Header from '@/components/section/Header.vue';
+import Video from '@/components/video/Video.vue';
 import Footer from '@/components/section/Footer.vue';
 </script>
 <script>

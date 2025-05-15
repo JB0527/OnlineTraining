@@ -9,7 +9,8 @@
 
     <!-- 검색창 -->
     <main>
-      <Video />
+      <RouterLink to="/"></RouterLink>
+      <RouterView />
     </main>
 
     <footer>
@@ -21,7 +22,6 @@
 
 <script setup>
 import Header from '@/components/section/Header.vue';
-import Video from '@/components/video/Video.vue';
 import Footer from '@/components/section/Footer.vue';
 </script>
 <script>

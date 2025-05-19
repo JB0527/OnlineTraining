@@ -1,11 +1,49 @@
 <template>
-  <div class="container my-3" id="searchbar">
-    <form @submit.prevent="onSearch">
-      <div class="d-flex align-items-center gap-2">
-        <img src="../../assets/images/search.png" alt="Search" />
-        <input v-model="searchQuery" class="form-control" type="text" placeholder="운동 제목 검색" name="content" />
+  <div class="container my-3" id="searchbar" v-if="!isLoggedIn">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-default">
+      영상을 등록해보세요!
+    </button>
+  </div>
+  <div class="modal fade" id="modal-default" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">나만의 영상을 등록해보아요!</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <!-- 제목 입력 -->
+            <div class="mb-3">
+              <label for="videoTitle" class="form-label">제목</label>
+              <input type="text" id="videoTitle" v-model="title" name="title" class="form-control" placeholder="제목을 입력하세요">
+            </div>
+
+            <!-- 운동 부위 선택 -->
+            <div class="mb-3">
+              <label for="part" class="form-label">운동 부위</label>
+              <select name="part" v-model="part" id="part" class="form-select">
+                <option value="upper">상체</option>
+                <option value="lower">하체</option>
+                <option value="abdomen">복부</option>
+                <option value="whole">전신</option>
+              </select>
+            </div>
+
+            <!-- URL 입력 -->
+            <div class="mb-3">
+              <label for="videoUrl" class="form-label">영상 URL</label>
+              <input type="text" v-model="url" id="videoUrl" name="url" class="form-control" placeholder="URL을 입력하세요">
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="modalClose" class="btn btn-primary" @click="enroll">등록</button>
+          <button type="button" id="modalClose" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        </div>
       </div>
-    </form>
+    </div>
   </div>
 
   <!-- 최근 영상 -->
@@ -39,7 +77,7 @@
           <iframe :src="exer.url" allowfullscreen></iframe>
         </div>
         <div class="row" id="제목">
-          <a :href="`/review?videoId=${exer.videoId}`">{{ exer.title }}</a>
+          <a :href="`/review?videoId=${exer.id}`">{{ exer.title }}</a>
         </div>
       </div>
     </div>
@@ -48,17 +86,31 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import '@/assets/main.css'
-import { getVideoList } from "@/api/video"
+import { getVideoList, insertVideo } from "@/api/video"
+import { useRouter } from 'vue-router'
 
 // 상태 변수들
 const isLoggedIn = ref(false)
-const searchQuery = ref("")
 const selectedPart = ref("all")
 const exers = ref([])
+const title = ref("")
+const part = ref("")
+const url = ref("")
+
+const router = useRouter()
 
 // 비디오 리스트 요청
 const requestBoardList = async () => {
   exers.value = await getVideoList()
+}
+
+const insertVideoModal = async () => {
+  const video = {
+    title: title.value,
+    part: part.value,
+    url: url.value
+  }
+  await insertVideo(video)
 }
 
 onMounted(() => {
@@ -72,9 +124,17 @@ const filteredExers = computed(() => {
 })
 
 // 검색 버튼 클릭
-const onSearch = () => {
-  alert(`검색 기능 구현 예정: ${searchQuery.value}`)
+const enroll = () => {
+  console.log(title.value);
+  console.log(part.value);
+  console.log(url.value);
+
+  insertVideoModal()
+  router.replace('/')
+  window.location.reload();
 }
+
+
 </script>
 
 

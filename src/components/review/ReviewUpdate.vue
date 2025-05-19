@@ -12,7 +12,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getReviewById, updateReview } from '@/api/review'
+import { getReviewDetail, updateReview } from '@/api/review'
 
 const route = useRoute()
 const router = useRouter()
@@ -22,7 +22,7 @@ const title = ref('')
 const content = ref('')
 
 onMounted(async () => {
-  const res = await getReviewById(reviewId)
+  const res = await getReviewDetail(reviewId)
   title.value = res.data.title
   content.value = res.data.content
 })

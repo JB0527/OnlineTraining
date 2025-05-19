@@ -13,7 +13,7 @@ export async function getVideoDetail(videoId) {
 }
 
 export async function insertVideo(video) {
-  const { data } = await axios.post(BASE_URL, video);
+  const { data } = await api.post(BASE_URL, video);
   return data;
 }
 

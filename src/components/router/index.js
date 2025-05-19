@@ -11,7 +11,6 @@ import ReviewList from '@/components/review/ReviewList.vue';
 import ReviewDetail from '@/components/review/ReviewDetail.vue';
 import ReviewWrite from '@/components/review/ReviewWrite.vue';
 import ReviewUpdate from '@/components/review/ReviewUpdate.vue';
-import ReviewSearch from '@/components/review/ReviewSearch.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,7 +52,7 @@ const router = createRouter({
         {
           path: '',
           name: 'reviewList',
-          component: ReviewSearch,
+          component: ReviewList,
         },
         {
           path: 'detail/:reviewId',

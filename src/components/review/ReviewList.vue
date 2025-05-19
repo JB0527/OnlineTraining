@@ -1,55 +1,56 @@
 <template>
   <div class="review-list">
     <h2>리뷰 목록</h2>
-    <div v-if="reviews.length === 0">리뷰가 없습니다.</div>
-    <ul v-else>
-      <li v-for="review in reviews" :key="review.reviewId" class="review-item">
-        <RouterLink :to="`/review/${review.reviewId}`">
-          <h3>{{ review.title }}</h3>
-        </RouterLink>
-        <p>작성자: {{ review.writer }}</p>
-        <p>조회수: {{ review.clickCount }}</p>
-      </li>
-    </ul>
-    <RouterLink :to="`/review/write/${videoId}`" class="write-link">리뷰 작성하기</RouterLink>
+    <input v-model="content" @keyup.enter="search" type="text" placeholder="내용으로 검색" />
+    <button @click="search">검색</button>
+
+    <div v-if="reviews.length">
+      <ul>
+        <li v-for="review in reviews" :key="review.reviewId">
+          <RouterLink :to="{ name: 'reviewDetail', params: { reviewId: review.reviewId } }">
+            {{ review.title }} - {{ review.writer }}
+          </RouterLink>
+        </li>
+      </ul>
+    </div>
+    <div v-else>
+      <p>검색 결과가 없습니다.</p>
+    </div>
+
+    <RouterLink :to="{ name: 'reviewWrite', query: { videoId } }">
+      <button>리뷰 작성</button>
+    </RouterLink>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { getAllReviews } from '@/api/review';
-import ReviewItem from './ReviewItem.vue';
+import { getAllReviews, getSearchReviews } from '@/api/review';
 
 const route = useRoute();
-const videoId = route.params.videoId || route.query.videoId;
+const videoId = route.query.videoId;
+
+const content = ref('');
 const reviews = ref([]);
 
-onMounted(async () => {
-  const res = await getAllReviews(videoId);
-  reviews.value = res.data;
-});
-</script>
+const loadAll = async () => {
+  reviews.value = await getAllReviews(videoId);
+};
 
+const search = async () => {
+  if (content.value.trim() === '') {
+    await loadAll();
+  } else {
+    reviews.value = await getSearchReviews(videoId, content.value);
+  }
+};
+
+onMounted(loadAll);
+</script>
 
 <style scoped>
 .review-list {
   padding: 20px;
-}
-.review-item {
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0;
-}
-.write-link {
-  display: inline-block;
-  margin-top: 20px;
-  background: #3c526b;
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  text-decoration: none;
-}
-.write-link:hover {
-  background: #2e3d52;
 }
 </style>

@@ -12,7 +12,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { addReview } from '@/api/review'
+import { writeReview } from '@/api/review'
 
 const route = useRoute()
 const router = useRouter()
@@ -23,7 +23,7 @@ const content = ref('')
 
 const submit = async () => {
   try {
-    await addReview({
+    await writeReview({
       videoId,
       title: title.value,
       content: content.value

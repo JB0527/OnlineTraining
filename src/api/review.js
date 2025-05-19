@@ -1,35 +1,45 @@
 import axios from 'axios';
 
+const API_BASE = 'http://localhost:8080/api/v1/review';
+
 export async function getAllReviews(videoId) {
-  const { data } = await axios.get('/api/review', { params: { videoId } });
-  return data;
-}
-
-export async function getSearchReviews(videoId, searchContent) {
-  const { data } = await axios.get('/api/review/search', {
-    params: { videoId, searchContent }
+  const res = await axios.get(API_BASE, {
+    params: { videoId }
   });
-  return data;
+  return res.data;
 }
 
-export async function getReviewById(reviewId) {
-  const { data } = await axios.get(`/api/review/${reviewId}`);
-  return data;
+export async function getSearchReviews(videoId, content) {
+  const res = await axios.get(`${API_BASE}/search`, {
+    params: { videoId, content }
+  });
+  return res.data;
 }
 
-export async function addReview(review) {
-  const { data } = await axios.post('/api/review', review);
-  return data;
+export async function getReviewDetail(reviewId) {
+  const res = await axios.get(`${API_BASE}/${reviewId}`);
+  return res.data;
 }
 
-export async function updateReview(reviewId, title, content) {
-  return await axios.put(`/api/review/${reviewId}`, { title, content });
+export async function writeReview(reviewData) {
+  const res = await axios.post(API_BASE, reviewData);
+  return res.data;
+}
+
+export async function updateReview(reviewId, reviewData) {
+  return (await axios.put(`${API_BASE}/${reviewId}`, null, {
+    params: {
+      title: reviewData.title,
+      content: reviewData.content
+    }
+  })).data;
 }
 
 export async function deleteReview(reviewId) {
-  return await axios.delete(`/api/review/${reviewId}`);
+  const res = await axios.delete(`${API_BASE}/${reviewId}`);
+  return res.data;
 }
-
-export async function updateCount(reviewId) {
-  return await axios.patch(`/api/review/${reviewId}/count`);
+export async function updateClickCount(reviewId) {
+  const res = await axios.put(`${API_BASE}/${reviewId}/click`);
+  return res.data;
 }

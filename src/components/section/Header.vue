@@ -6,7 +6,7 @@
         <div class="header-right d-flex align-items-center gap-3">
           <div>
             <a v-if="!isLoggedIn" @click="login">로그인</a>
-            <a v-else >로그아웃</a>
+            <a v-else @click="logout">로그아웃</a>
           </div>
           <div class="user">
             <img src="../../assets/images/user.png" alt="User" />
@@ -23,6 +23,9 @@ import {useRouter} from 'vue-router'
 const router = useRouter()
 const login = () => {
   router.push('/user/login')
+}
+const logout = () => {
+  sessionStorage.clear();
 }
 </script>
 <script>

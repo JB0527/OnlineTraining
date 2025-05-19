@@ -16,27 +16,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import axios from 'axios'
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { getAllReviews } from '@/api/review';
+import ReviewItem from './ReviewItem.vue';
 
-const route = useRoute()
-const videoId = parseInt(route.query.videoId || '0')  // ?videoId=1 식으로 전달
-const reviews = ref([])
+const route = useRoute();
+const videoId = route.params.videoId || route.query.videoId;
+const reviews = ref([]);
 
-const fetchReviews = async () => {
-  try {
-    const res = await axios.get(`/api/review/list?videoId=${videoId}`)
-    reviews.value = res.data
-  } catch (error) {
-    console.error("리뷰 목록 가져오기 실패", error)
-  }
-}
-
-onMounted(() => {
-  fetchReviews()
-})
+onMounted(async () => {
+  const res = await getAllReviews(videoId);
+  reviews.value = res.data;
+});
 </script>
+
 
 <style scoped>
 .review-list {

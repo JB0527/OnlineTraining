@@ -5,12 +5,13 @@ import Login from "@/components/user/Login.vue";
 import UserView from "@/views/UserView.vue";
 import Signup from "@/components/user/Signup.vue";
 
-import ReviewView from "@/views/ReviewView.vue"
-import ReviewList from "@/components/review/ReviewList.vue"
-import ReviewDetail from "@/components/review/ReviewDetail.vue"
-import ReviewWrite from "@/components/review/ReviewWrite.vue"
-import ReviewUpdate from "@/components/review/ReviewUpdate.vue"
-// import ReviewSearch from "@/components/review/ReviewSearch.vue"
+// src/router/index.js
+import ReviewView from '@/views/ReviewView.vue';
+import ReviewList from '@/components/review/ReviewList.vue';
+import ReviewDetail from '@/components/review/ReviewDetail.vue';
+import ReviewWrite from '@/components/review/ReviewWrite.vue';
+import ReviewUpdate from '@/components/review/ReviewUpdate.vue';
+import ReviewSearch from '@/components/review/ReviewSearch.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,39 +47,31 @@ const router = createRouter({
     },
     {
       path: '/review',
-      name: 'review',
+      name: 'reviewView',
       component: ReviewView,
       children: [
         {
           path: '',
           name: 'reviewList',
-          component: ReviewList,
+          component: ReviewSearch,
         },
-        // {
-        //   path: 'search',
-        //   name: 'reviewSearch',
-        //   component: ReviewSearch
-        // },
         {
-          path: ':id',
+          path: 'detail/:reviewId',
           name: 'reviewDetail',
           component: ReviewDetail,
-          props: true
         },
         {
-          path: 'write/:videoId',
-          name: 'reviewWrite',
-          component: ReviewWrite,
-          props: true
-        },
-        {
-          path: 'update/:id',
+          path: 'update/:reviewId',
           name: 'reviewUpdate',
           component: ReviewUpdate,
-          props: true
-        }
+        },
+        {
+          path: 'write',
+          name: 'reviewWrite',
+          component: ReviewWrite,
+        },
       ]
-    } 
+    }
   ],
 })
 

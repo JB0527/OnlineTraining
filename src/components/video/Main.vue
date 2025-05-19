@@ -58,39 +58,19 @@
 
 <script>
 import '@/assets/main.css'
+import { getVideoList } from "@/api/video"
+import { ref } from "vue"
 
 export default {
   data() {
+    let videos = ref([]);
+    videos = getVideoList()
+    console.log(videos.json())
     return {
       isLoggedIn: false,
       searchQuery: "",
       selectedPart: "all",
-      exers: [
-        {
-          videoId: 1,
-          url: "https://www.youtube.com/embed/example1",
-          title: "전신 운동 1",
-          part: "whole",
-        },
-        {
-          videoId: 2,
-          url: "https://www.youtube.com/embed/example2",
-          title: "상체 운동 2",
-          part: "upper",
-        },
-        {
-          videoId: 3,
-          url: "https://www.youtube.com/embed/example3",
-          title: "하체 운동 3",
-          part: "lower",
-        },
-        {
-          videoId: 4,
-          url: "https://www.youtube.com/embed/example4",
-          title: "복부 운동 4",
-          part: "abdomen",
-        },
-      ],
+      exers: videos.data,
     };
   },
   computed: {

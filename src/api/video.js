@@ -1,9 +1,9 @@
-import axios from 'axios';
+import api from '@/api/index';
 
 const BASE_URL = "http://localhost:8080/api/v1/video"
 
 const getVideoList =  async() => {
-  const { data } = await axios.get(BASE_URL);
+  const { data } = await api.get(BASE_URL);
   return data;
 }
 
@@ -27,5 +27,5 @@ export async function deleteVideo(videoId) {
 }
 export {
     getVideoList,
-    
+
 }

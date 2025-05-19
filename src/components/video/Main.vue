@@ -55,7 +55,7 @@
           <iframe :src="exer.url" allowfullscreen></iframe>
         </div>
         <div class="row" id="제목">
-          <a :href="`/review?videoId=${exer.videoId}`">{{ exer.title }}</a>
+          <a :href="`/review?videoId=${exer.id}`">{{ exer.title }}</a>
         </div>
       </div>
     </div>

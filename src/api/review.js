@@ -3,9 +3,7 @@ import axios from 'axios';
 const API_BASE = 'http://localhost:8080/api/v1/review';
 
 export async function getAllReviews(videoId) {
-  const res = await axios.get(API_BASE, {
-    params: { videoId }
-  });
+  const res = await axios.get(`${API_BASE}/${videoId}`);
   return res.data;
 }
 
@@ -17,7 +15,7 @@ export async function getSearchReviews(videoId, content) {
 }
 
 export async function getReviewDetail(reviewId) {
-  const res = await axios.get(`${API_BASE}/${reviewId}`);
+  const res = await axios.get(`${API_BASE}/review/${reviewId}`);
   return res.data;
 }
 
@@ -27,19 +25,16 @@ export async function writeReview(reviewData) {
 }
 
 export async function updateReview(reviewId, reviewData) {
-  return (await axios.put(`${API_BASE}/${reviewId}`, null, {
-    params: {
-      title: reviewData.title,
-      content: reviewData.content
-    }
-  })).data;
+  const res = await axios.put(`${API_BASE}/${reviewId}`, reviewData);
+  return res.data;
 }
 
 export async function deleteReview(reviewId) {
   const res = await axios.delete(`${API_BASE}/${reviewId}`);
   return res.data;
 }
+
 export async function updateClickCount(reviewId) {
-  const res = await axios.put(`${API_BASE}/${reviewId}/click`);
+  const res = await axios.patch(`${API_BASE}/${reviewId}/click`);
   return res.data;
 }

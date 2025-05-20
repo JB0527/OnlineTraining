@@ -7,14 +7,27 @@
       </div>
       <div class="exercisegif"></div>
     </div>
-
-
+    
+    
+    <div>
+      <h2>{{video.title}}</h2>
+    </div>
+    
     <hr>
     <div class="iframe">
-      <iframe width="560" height="315" :src="video.url" title="YouTube video player" frameborder="0"
+      <iframe
+        width="560"
+        height="315"
+        :src="video.url"
+        title="YouTube video player"
+        frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
     </div>
+
+
 
     <hr>
     <div class="container">
@@ -45,32 +58,30 @@
       </div>
       <hr>
 
-      <div class="list">
+      <!-- 헤더 -->
+      <div class="list list-header">
         <div class="num">번호</div>
         <div class="subject">제목</div>
         <div class="writer">작성자</div>
         <div class="click">조회수</div>
         <div class="time">작성시간</div>
       </div>
-      <hr class="list_line">
-      <div v-for="review in reviews" :key="review.reviewId">
 
-      
-      <div class="list">
-        <RouterLink :to="{ name: 'reviewDetail', params: { reviewId: review.reviewId } }">
-          <div class="num">{{ review.reviewId }}</div>
-          <div class="subject">
-            <a href="/reviewServlet?action=review_detail&reviewId=&countchange=1">
-              {{ review.title }}
-            </a>
-          </div>
-          <div class="writer">
-            {{ review.writer }}
-          </div>
-          <div class="click">{{ review.clickCount }}</div>
-          <div class="time">{{ review.writedTime }}</div>
-        </RouterLink>
-      </div>
+      <!-- 리스트 -->
+      <div
+        v-for="review in reviews"
+        :key="review.reviewId"
+        class="list"
+      >
+        <div class="num">{{ review.reviewId }}</div>
+        <div class="subject">
+          <RouterLink :to="{ name: 'reviewDetail', params: { reviewId: review.reviewId } }">
+            {{ review.title }}
+          </RouterLink>
+        </div>
+        <div class="writer">{{ review.writer }}</div>
+        <div class="click">{{ review.clickCount }}</div>
+        <div class="time">{{ review.writedTime }}</div>
       </div>
 
     </div>
@@ -87,10 +98,10 @@ import '@/assets/review.css'
 
 const route = useRoute();
 const videoId = route.query.videoId;
-
 const content = ref('');
 const reviews = ref([]);
 const video = ref({});
+const videoUrl = ref('')
 
 const loadAll = async () => {
   reviews.value = await getAllReviews(videoId);
@@ -106,13 +117,40 @@ const search = async () => {
 
 const getVideo = async () => {
   video.value = await getVideoDetail(videoId);
+  console.log(video.value.url);
+  videoUrl = video.value.url
 }
 
-onMounted(loadAll);
+
+onMounted(() => {
+  loadAll(),
+  getVideo()
+})
 </script>
 
 <style scoped>
-.review-list {
-  padding: 20px;
+.list {
+  display: grid;
+  grid-template-columns: 1fr 6fr 2fr 1fr 4fr; /* 제목(6fr)과 시간(4fr) 널널하게 */
+  padding: 8px 12px;
+  border-bottom: 1px solid #ccc;
+  align-items: center;
+}
+
+.list-header {
+  font-weight: bold;
+  background-color: #f0f0f0;
+}
+
+.subject a {
+  color: blue;
+  text-decoration: underline;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.time {
+  white-space: nowrap;
 }
 </style>

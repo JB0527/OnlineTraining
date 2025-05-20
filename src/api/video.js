@@ -7,25 +7,28 @@ const getVideoList =  async() => {
   return data;
 }
 
-export async function getVideoDetail(videoId) {
-  const { data } = await axios.get(BASE_URL+"/"+videoId);
+const getVideoDetail = async(videoId) => {
+  const { data } = await api.get(BASE_URL+"/"+videoId);
   return data;
 }
 
-export async function insertVideo(video) {
+const insertVideo = async(video) => {
   const { data } = await api.post(BASE_URL, video);
   return data;
 }
 
-export async function updateVideo(video) {
-  const { data } = await axios.put(BASE_URL, video);
+const updateVideo = async(video) => {
+  const { data } = await api.put(BASE_URL, video);
   return data;
 }
 
-export async function deleteVideo(videoId) {
-  return await axios.delete(BASE_URL+"/"+videoId);
+const deleteVideo = async(videoId) => {
+  return await api.delete(BASE_URL+"/"+videoId);
 }
 export {
     getVideoList,
-
+    getVideoDetail,
+    insertVideo,
+    updateVideo,
+    deleteVideo
 }

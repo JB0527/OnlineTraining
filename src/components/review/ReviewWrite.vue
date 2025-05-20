@@ -8,7 +8,6 @@
     </form>
   </div>
 </template>
-
 <script setup>
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -28,7 +27,7 @@ const submit = async () => {
       title: title.value,
       content: content.value
     })
-    router.push({ name: 'reviewList', params: { videoId } })
+    router.push({ name: 'reviewList', query: { videoId } })
   } catch (e) {
     console.error("작성 실패", e)
   }

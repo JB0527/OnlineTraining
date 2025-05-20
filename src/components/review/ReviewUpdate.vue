@@ -2,8 +2,8 @@
   <div class="review-update">
     <h2>리뷰 수정</h2>
     <form @submit.prevent="update">
-      <input v-model="title" type="text" />
-      <textarea v-model="content"></textarea>
+      <input v-model="title" type="text" placeholder="제목" required />
+      <textarea v-model="content" placeholder="내용" required></textarea>
       <button type="submit">수정하기</button>
     </form>
   </div>
@@ -22,14 +22,23 @@ const title = ref('')
 const content = ref('')
 
 onMounted(async () => {
-  const res = await getReviewDetail(reviewId)
-  title.value = res.data.title
-  content.value = res.data.content
+  console.log('받은 reviewId:', reviewId)
+  try {
+    const res = await getReviewDetail(reviewId)
+    console.log('받은 리뷰 내용:', res)
+    title.value = res.title
+    content.value = res.content
+  } catch (e) {
+    console.error('리뷰 가져오기 실패:', e)
+  }
 })
 
 const update = async () => {
   try {
-    await updateReview(reviewId, title.value, content.value)
+    await updateReview(reviewId, {
+      title: title.value,
+      content: content.value
+    })
     router.push({ name: 'reviewDetail', params: { reviewId } })
   } catch (e) {
     console.error("수정 실패", e)

@@ -1,10 +1,10 @@
 import api from '@/api/index';
 import userApi from '@/api/login';
-// TODO 로그인 필요한 API 접근 시 userApi로 변경바람.
+
 const API_BASE = 'http://localhost:8080/api/v1/review';
 
 const getAllReviews =  async(videoId) =>{
-  const {data} = await api.get(`${API_BASE}/${videoId}`);
+  const {data} = await api.get(`${API_BASE}/list/${videoId}`);
   return data;
 }
 
@@ -27,17 +27,17 @@ const writeReview =  async(reviewData) =>{
 }
 
 const updateReview =  async(reviewId, reviewData) =>{
-  const {data} = await api.put(`${API_BASE}/${reviewId}`, reviewData);
+  const {data} = await userApi.put(`${API_BASE}/${reviewId}`, reviewData);
   return data;
 }
 
 const deleteReview =  async(reviewId) =>{
-  const {data} = await api.delete(`${API_BASE}/${reviewId}`);
+  const {data} = await userApi.delete(`${API_BASE}/${reviewId}`);
   return data;
 }
 
 const updateClickCount =  async(reviewId) =>{
-  const {data} = await api.patch(`${API_BASE}/${reviewId}/click`);
+  const {data} = await api.patch(`${API_BASE}/click/${reviewId}`);
   return data;
 }
 export {

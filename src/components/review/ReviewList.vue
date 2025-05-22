@@ -76,7 +76,7 @@
       >
         <div class="num">{{ review.reviewId }}</div>
         <div class="subject">
-          <RouterLink :to="{ name: 'reviewDetail', params: { reviewId: review.reviewId } }">
+          <RouterLink :to="{ name: 'reviewDetail', query: { videoId }, params: { reviewId: review.reviewId } }">
             {{ review.title }}
           </RouterLink>
         </div>

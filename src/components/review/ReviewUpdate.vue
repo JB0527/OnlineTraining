@@ -17,6 +17,7 @@ import { getReviewDetail, updateReview } from '@/api/review'
 const route = useRoute()
 const router = useRouter()
 const reviewId = route.params.reviewId
+const videoId = route.query.videoId;
 
 const title = ref('')
 const content = ref('')
@@ -39,7 +40,7 @@ const update = async () => {
       title: title.value,
       content: content.value
     })
-    router.push({ name: 'reviewDetail', params: { reviewId } })
+    router.push({ name: 'reviewDetail', params: { reviewId }, query: {videoId} })
   } catch (e) {
     console.error("수정 실패", e)
   }

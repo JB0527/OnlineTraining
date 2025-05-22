@@ -20,6 +20,7 @@ import { getReviewDetail, deleteReview, updateClickCount } from '@/api/review'
 const route = useRoute()
 const router = useRouter()
 const reviewId = route.params.reviewId
+const videoId = route.query.videoId;
 
 const review = ref(null)
 
@@ -35,10 +36,10 @@ onMounted(async () => {
 const edit = () => {
   const writerId = sessionStorage.getItem('id');
   if (writerId !== review.value.writerId) {
-    alert('작성자만 수정정할 수 있습니다.')
+    alert('작성자만 수정할 수 있습니다.')
     return
   }
-  router.push({ name: 'reviewUpdate', params: { reviewId } })
+  router.push({ name: 'reviewUpdate', params: { reviewId }, query: { videoId } })
 }
 
 const remove = async () => {
@@ -49,7 +50,7 @@ const remove = async () => {
   }
   try {
     await deleteReview(reviewId)
-    router.push({ name: 'reviewList', params: { videoId: review.value.videoId } })
+    await router.push({name: 'reviewList', query: {videoId}})
   } catch (e) {
     console.error("삭제 실패", e)
   }

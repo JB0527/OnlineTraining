@@ -1,6 +1,6 @@
 import api from '@/api/index';
 
-const BASE_URL = "http://localhost:8080/api/v1/video"
+const BASE_URL = "http://localhost:8080/api/v1/video";
 
 const getVideoList =  async() => {
   const { data } = await api.get(BASE_URL);
@@ -25,10 +25,17 @@ const updateVideo = async(video) => {
 const deleteVideo = async(videoId) => {
   return await api.delete(BASE_URL+"/"+videoId);
 }
+
+const updateClickCount =  async(videoId) =>{
+  const {data} = await api.patch(`${BASE_URL}/${videoId}/click`);
+  return data;
+}
+
 export {
     getVideoList,
     getVideoDetail,
     insertVideo,
     updateVideo,
-    deleteVideo
+    deleteVideo,
+    updateClickCount
 }

@@ -57,6 +57,9 @@
         <div class="row" id="제목">
           <a :href="`/review?videoId=${exer.id}`">{{ exer.title }}</a>
         </div>
+        <div class="row" id="조회수">
+          <a :href="`/review?videoId=${exer.id}`">{{ exer.count }}</a>
+        </div>
       </div>
     </div>
   </div>
@@ -78,6 +81,9 @@
         </div>
         <div class="row" id="제목">
           <a :href="`/review?videoId=${exer.id}`">{{ exer.title }}</a>
+        </div>
+        <div class="row" id="조회수">
+          <a :href="`/review?videoId=${exer.id}`">{{ exer.count }}</a>
         </div>
       </div>
     </div>

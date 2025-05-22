@@ -3,6 +3,7 @@
     <h2>{{ review.title }}</h2>
     <p>{{ review.content }}</p>
     <p>조회수: {{ review.clickCount }}</p>
+    
     <button @click="edit">수정</button>
     <button @click="remove">삭제</button>
   </div>
@@ -32,16 +33,25 @@ onMounted(async () => {
 })
 
 const edit = () => {
+  const writerId = sessionStorage.getItem('id');
+  if (writerId !== review.value.writerId) {
+    alert('작성자만 수정정할 수 있습니다.')
+    return
+  }
   router.push({ name: 'reviewUpdate', params: { reviewId } })
 }
 
 const remove = async () => {
+  const writerId = sessionStorage.getItem('id');
+  if (writerId !== review.value.writerId) {
+    alert('작성자만 삭제할 수 있습니다.')
+    return
+  }
   try {
     await deleteReview(reviewId)
-    router.push({ name: 'reviewList', query: { videoId: review.value.videoId } })
+    router.push({ name: 'reviewList', params: { videoId: review.value.videoId } })
   } catch (e) {
     console.error("삭제 실패", e)
   }
 }
-
 </script>

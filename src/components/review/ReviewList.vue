@@ -9,9 +9,10 @@
     </div>
     
     
-    <div>
-      <h2>{{video.title}}</h2>
-    </div>
+  
+    <h2>{{video.title}}</h2>
+    <p>{{video.count }}</p>
+    
     
     <hr>
     <div class="iframe">
@@ -93,7 +94,7 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { getAllReviews, getSearchReviews } from '@/api/review';
-import { getVideoDetail } from '@/api/video'
+import { getVideoDetail, updateClickCount } from '@/api/video'
 import '@/assets/review.css'
 
 const route = useRoute();
@@ -122,10 +123,18 @@ const getVideo = async () => {
 }
 
 
-onMounted(() => {
-  loadAll(),
-  getVideo()
+onMounted(async () => {
+  loadAll();
+  getVideo();
+  if (videoId) {
+    updateClickCount(videoId);
+    console.log(videoId);
+  } else {
+    console.warn('videoId가 정의되지 않았습니다.');
+  }
 })
+
+
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
 import api from '@/api/index';
 import userApi from '@/api/login';
-
+// TODO 로그인 필요한 API 접근 시 userApi로 변경바람.
 const API_BASE = 'http://localhost:8080/api/v1/review';
 
 const getAllReviews =  async(videoId) =>{

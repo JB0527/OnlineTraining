@@ -1,5 +1,5 @@
-import axios from 'axios';
 import api from '@/api/index';
+import userApi from '@/api/login';
 
 const API_BASE = 'http://localhost:8080/api/v1/review';
 
@@ -22,7 +22,7 @@ const getReviewDetail =  async(reviewId) =>{
 }
 
 const writeReview =  async(reviewData) =>{
-  const {data} = await api.post(API_BASE, reviewData);
+  const {data} = await userApi.post(API_BASE, reviewData);
   return data;
 }
 

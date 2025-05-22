@@ -38,9 +38,10 @@ const edit = () => {
 const remove = async () => {
   try {
     await deleteReview(reviewId)
-    router.push({ name: 'reviewList', params: { videoId: review.value.videoId } })
+    router.push({ name: 'reviewList', query: { videoId: review.value.videoId } })
   } catch (e) {
     console.error("삭제 실패", e)
   }
 }
+
 </script>

@@ -56,7 +56,18 @@ const login = async () => {
   }).then((res) => {
     if (res.status === 200) {
       console.log(res.data)
-      logincCheck.login(res.data.id, res.data.name);
+      const token  = res.data.split(".")
+      console.log(token)
+
+      // 이렇게 가져오면 한글 다 깨져..
+      const name = JSON.parse(atob(token[1]))["name"]
+      const id = JSON.parse(atob(token[1]))["id"]
+      console.log(id)
+      console.log(name)
+
+      sessionStorage.setItem("access-token", res.data);
+
+      logincCheck.login(id, name, res.data);
       router.push('/')
     } else {
       message.value = "아이디나 비밀번호가 일치하지 않습니다."

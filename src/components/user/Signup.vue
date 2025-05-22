@@ -62,7 +62,7 @@ const requestSignup = async () => {
     password: password.value,
   });
   if (data.value === 200) {
-    router.push('/user/login');
+    await router.push('/user/login');
   } else {
     alert("이미 아이디나 이메일이 존재합니다.");
   }

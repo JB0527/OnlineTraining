@@ -119,7 +119,7 @@ const search = async () => {
 const getVideo = async () => {
   video.value = await getVideoDetail(videoId);
   console.log(video.value.url);
-  videoUrl = video.value.url
+  videoUrl.value = video.value.url
 }
 
 

@@ -24,6 +24,7 @@ import { useRouter } from 'vue-router'
 import { useLoginCheck } from '@/stores/logincheck'
 
 const loginCheck = useLoginCheck();
+loginCheck.checkLogin();
 
 const router = useRouter();
 

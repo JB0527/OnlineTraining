@@ -4,9 +4,10 @@ import { defineStore } from 'pinia'
 export const useLoginCheck = defineStore('loginCheck', () => {
     const isLoggedIn = ref(false);
 
-    const login = (userId, userName) => {
+    const login = (userId, userName, token) => {
         sessionStorage.setItem('id', userId);
         sessionStorage.setItem('name', userName);
+        sessionStorage.setItem("access-token", token);
         isLoggedIn.value = true
     }
 

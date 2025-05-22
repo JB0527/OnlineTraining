@@ -5,8 +5,8 @@
     </div>
     <div class="header-right d-flex align-items-center gap-3">
       <div>
-        <a v-if="!isLoggedIn" @click="login">로그인</a>
-        <a v-else @click="logout">로그아웃</a>
+        <a href="#" style="color: black; text-decoration: none;" v-if="!loginCheck.isLoggedIn" @click="login">로그인</a>
+        <a href="#" style="color: black; text-decoration: none;" v-else @click="logout">로그아웃</a>
       </div>
       <div class="user">
         <img src="../../assets/images/user.png" alt="User" />
@@ -19,25 +19,20 @@
 import '@/assets/main.css';
 import '@/assets/base.css';
 
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useLoginCheck } from '@/stores/logincheck'
 
-const router = useRouter()
-const isLoggedIn = ref(false)
+const loginCheck = useLoginCheck();
+
+const router = useRouter();
 
 const login = () => {
   router.push('/user/login')
 }
 
 const logout = () => {
-  sessionStorage.clear()
-  isLoggedIn.value = false
+  loginCheck.logout();
+  router.push('/');
 }
-
-onMounted(() => {
-  // 마운트될 때 로그인 여부 체크
-  const userId = sessionStorage.getItem('id')
-  isLoggedIn.value = !!userId
-  console.log(userId);
-})
 </script>

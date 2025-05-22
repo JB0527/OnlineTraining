@@ -34,12 +34,14 @@ import '@/assets/signin.css'
 import {useRouter} from 'vue-router'
 import {ref} from "vue";
 import axios from "axios";
+import { useLoginCheck } from '@/stores/logincheck'
 
 const userId = ref('')
 const password = ref('')
 const message = ref("")
 
 const router = useRouter()
+const logincCheck = useLoginCheck();
 
 const signup = () => {
   router.push('/user/signup')
@@ -54,9 +56,7 @@ const login = async () => {
   }).then((res) => {
     if (res.status === 200) {
       console.log(res.data)
-      sessionStorage.setItem('id', res.data.id)
-      sessionStorage.setItem('email', res.data.email)
-      sessionStorage.setItem('name', res.data.name)
+      logincCheck.login(res.data.id, res.data.name);
       router.push('/')
     } else {
       message.value = "아이디나 비밀번호가 일치하지 않습니다."

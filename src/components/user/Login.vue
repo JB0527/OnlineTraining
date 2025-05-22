@@ -47,6 +47,29 @@ const signup = () => {
   router.push('/user/signup')
 }
 
+// base64url 디코딩 함수 (한글 깨짐 방지)
+function base64UrlDecode(str) {
+  // base64url -> base64로 변환
+  str = str.replace(/-/g, "+").replace(/_/g, "/");
+  // 패딩 추가
+  while (str.length % 4) {
+    str += "=";
+  }
+  // 디코딩 (한글 지원)
+  try {
+    return decodeURIComponent(
+        Array.prototype.map
+            .call(
+                atob(str),
+                (c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
+            )
+            .join("")
+    );
+  } catch (e) {
+    return atob(str);
+  }
+}
+
 const BASE_URL = "http://localhost:8080/api/v1"
 
 const login = async () => {
@@ -60,8 +83,12 @@ const login = async () => {
       console.log(token)
 
       // 이렇게 가져오면 한글 다 깨져..
-      const name = JSON.parse(atob(token[1]))["name"]
-      const id = JSON.parse(atob(token[1]))["id"]
+      // const name = JSON.parse(atob(token[1]))["name"]
+      // const id = JSON.parse(atob(token[1]))["id"]
+
+      const payload = JSON.parse(base64UrlDecode(token[1]));
+      const id = payload["id"];
+      const name = payload["name"];
       console.log(id)
       console.log(name)
 

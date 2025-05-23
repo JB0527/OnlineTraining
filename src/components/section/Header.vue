@@ -5,6 +5,9 @@
     </div>
     <div class="header-right d-flex align-items-center gap-3">
       <div>
+        <a href="#" style="color: black; text-decoration: none;" v-if="!subscribeCheck.isSubscribed & loginCheck.isLoggedIn" @click="subscribePay">구독</a>
+      </div>
+      <div>
         <a href="#" style="color: black; text-decoration: none;" v-if="!loginCheck.isLoggedIn" @click="login">로그인</a>
         <a href="#" style="color: black; text-decoration: none;" v-else @click="logout">로그아웃</a>
       </div>
@@ -22,9 +25,13 @@ import '@/assets/base.css';
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useLoginCheck } from '@/stores/logincheck'
+import { useSubscribeCheck } from '@/stores/subscribe'
 
 const loginCheck = useLoginCheck();
 loginCheck.checkLogin();
+
+const subscribeCheck = useSubscribeCheck();
+subscribeCheck.checkSubscribe();
 
 const router = useRouter();
 
@@ -34,6 +41,7 @@ const login = () => {
 
 const logout = () => {
   loginCheck.logout();
+  subscribeCheck.logout();
   router.push('/');
 }
 </script>

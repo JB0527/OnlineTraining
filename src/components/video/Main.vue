@@ -1,5 +1,5 @@
 <template>
-  <div class="container my-3" id="searchbar" v-if="!isLoggedIn">
+  <div class="container my-3" id="searchbar" v-if="loginCheck.isLoggedIn">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-default">
       영상을 등록해보세요!
     </button>
@@ -60,6 +60,9 @@
         <div class="row" id="조회수">
           <a :href="`/review?videoId=${exer.id}`">{{ exer.count }}</a>
         </div>
+        <div class="row" id="작성자">
+          <a :href="`/review?videoId=${exer.id}`">{{ exer.writer }}</a>
+        </div>
       </div>
     </div>
   </div>
@@ -85,6 +88,9 @@
         <div class="row" id="조회수">
           <a :href="`/review?videoId=${exer.id}`">{{ exer.count }}</a>
         </div>
+        <div class="row" id="작성자">
+          <a :href="`/review?videoId=${exer.id}`">{{ exer.writer }}</a>
+        </div>
       </div>
     </div>
   </div>
@@ -94,9 +100,9 @@ import { ref, computed, onMounted } from 'vue'
 import '@/assets/main.css'
 import { getVideoList, insertVideo } from "@/api/video"
 import { useRouter } from 'vue-router'
+import { useLoginCheck } from '@/stores/logincheck'
 
 // 상태 변수들
-const isLoggedIn = ref(false)
 const selectedPart = ref("all")
 const exers = ref([])
 const title = ref("")
@@ -105,16 +111,25 @@ const url = ref("")
 
 const router = useRouter()
 
+const loginCheck = useLoginCheck();
+loginCheck.checkLogin();
+
 // 비디오 리스트 요청
 const requestBoardList = async () => {
   exers.value = await getVideoList()
 }
 
 const insertVideoModal = async () => {
+  if(!sessionStorage.getItem("id")) {
+    alert("로그인 후 영상 등록이 가능합니다.");
+    return;
+  }
   const video = {
     title: title.value,
     part: part.value,
-    url: url.value
+    url: url.value,
+    writer: sessionStorage.getItem("name"),
+    writerId: sessionStorage.getItem("id"),
   }
   await insertVideo(video)
 }

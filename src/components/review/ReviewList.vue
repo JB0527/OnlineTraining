@@ -12,6 +12,7 @@
   
     <h2>{{video.title}}</h2>
     <p>{{video.count }}</p>
+    <p>{{video.writer }}</p>
     
     
     <hr>
@@ -33,14 +34,13 @@
     <hr>
     <div class="container">
 
-      <form action="${pageContext.request.contextPath}/reviewServlet?" method="post">
-        <div class="first">
+      <div class="first">
 
           <RouterLink :to="{ name: 'reviewWrite', query: { videoId } }">
             <input type="submit" value="리뷰 작성">
           </RouterLink>
+          <button @click="requestDeleteVideo">영상 삭제</button>
         </div>
-      </form>
 
       <h5 style="font-weight: 600; color: #3c526b;">로그인해야 리뷰 작성이 가능합니다.</h5>
 
@@ -92,9 +92,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { getAllReviews, getSearchReviews } from '@/api/review';
-import { getVideoDetail, updateClickCount } from '@/api/video'
+import { deleteVideo, getVideoDetail, updateClickCount } from '@/api/video'
 import '@/assets/review.css'
 
 const route = useRoute();
@@ -103,6 +103,7 @@ const content = ref('');
 const reviews = ref([]);
 const video = ref({});
 const videoUrl = ref('')
+const router = useRouter();
 
 const loadAll = async () => {
   reviews.value = await getAllReviews(videoId);
@@ -120,6 +121,11 @@ const getVideo = async () => {
   video.value = await getVideoDetail(videoId);
   console.log(video.value.url);
   videoUrl.value = video.value.url
+}
+
+const requestDeleteVideo = async () => {
+  await deleteVideo(videoId);
+  await router.push("/");
 }
 
 

@@ -11,6 +11,7 @@ import ReviewList from '@/components/review/ReviewList.vue';
 import ReviewDetail from '@/components/review/ReviewDetail.vue';
 import ReviewWrite from '@/components/review/ReviewWrite.vue';
 import ReviewUpdate from '@/components/review/ReviewUpdate.vue';
+import Subscribe from '@/components/user/Subscribe.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,6 +42,11 @@ const router = createRouter({
           path: 'signup',
           name: 'signup',
           component:  Signup,
+        },
+        {
+          path: 'subscribe',
+          name: 'subscribe',
+          component:  Subscribe,
         },
       ]
     },

@@ -44,4 +44,9 @@ const logout = () => {
   subscribeCheck.logout();
   router.push('/');
 }
+
+const subscribePay = () => {
+  router.push('/user/subscribe')
+}
+
 </script>

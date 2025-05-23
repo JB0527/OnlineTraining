@@ -56,10 +56,10 @@ const pschecking = () => {
 
 const requestSignup = async () => {
   data.value = await signup({
-    id: id.value,
-    name: name.value,
-    email: email.value,
-    password: password.value,
+    id: id.value.trim(),
+    name: name.value.trim(),
+    email: email.value.trim(),
+    password: password.value.trim(),
   });
   if (data.value === 200) {
     await router.push('/user/login');

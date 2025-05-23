@@ -12,6 +12,7 @@ import ReviewDetail from '@/components/review/ReviewDetail.vue';
 import ReviewWrite from '@/components/review/ReviewWrite.vue';
 import ReviewUpdate from '@/components/review/ReviewUpdate.vue';
 import Subscribe from '@/components/user/Subscribe.vue';
+import PaymentComplete from '../user/PaymentComplete.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,29 +25,34 @@ const router = createRouter({
         {
           path: '',
           name: 'main',
-          component:  Main,
+          component: Main,
         }
       ]
     },
     {
+      path: '/payment/complete',
+      name: 'PaymentComplete',
+      component: PaymentComplete
+    },
+    {
       path: '/user',
       name: 'user',
-      component:  UserView,
+      component: UserView,
       children: [
         {
           path: 'login',
           name: 'login',
-          component:  Login,
+          component: Login,
         },
         {
           path: 'signup',
           name: 'signup',
-          component:  Signup,
+          component: Signup,
         },
         {
           path: 'subscribe',
           name: 'subscribe',
-          component:  Subscribe,
+          component: Subscribe,
         },
       ]
     },

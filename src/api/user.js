@@ -8,7 +8,7 @@ const signup =  async(user) =>{
 }
 
 const subscribe = async(userId) => {
-  await api.put(`${API_BASE}/subscribe/${userId}`);
+  await api.put(`${API_BASE}/subscribe`, userId);
 }
 
 export {

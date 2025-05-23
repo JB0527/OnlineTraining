@@ -6,6 +6,7 @@
     
     <button @click="edit">수정</button>
     <button @click="remove">삭제</button>
+    <button @click="list">목록</button>
   </div>
   <div v-else>
     <p>리뷰를 불러오는 중...</p>
@@ -54,5 +55,9 @@ const remove = async () => {
   } catch (e) {
     console.error("삭제 실패", e)
   }
+}
+
+const list = () => {
+  router.push({ name: 'reviewList', query: { videoId } })
 }
 </script>

@@ -9,10 +9,12 @@
 
     <!-- 검색창 -->
     <main>
+      <RecommendView />
       <RouterLink to="/"></RouterLink>
       <RouterView />
-    </main>
 
+    </main>
+    
     <footer>
       <Footer />
     </footer>
@@ -23,4 +25,6 @@
 <script setup>
 import Header from '@/components/section/Header.vue';
 import Footer from '@/components/section/Footer.vue';
+import RecommendView from '@/views/RecommendView.vue';
+
 </script>

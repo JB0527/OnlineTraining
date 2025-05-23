@@ -37,22 +37,15 @@
       <div class="first">
 
           <RouterLink :to="{ name: 'reviewWrite', query: { videoId } }">
-            <input type="submit" value="리뷰 작성">
+            <input type="submit" value="리뷰 작성" v-if="subscribeCheck.isSubscribed">
           </RouterLink>
-          <button @click="requestDeleteVideo">영상 삭제</button>
+          <button @click="isPossibleDelete">영상 삭제</button>
         </div>
 
-      <h5 style="font-weight: 600; color: #3c526b;">로그인해야 리뷰 작성이 가능합니다.</h5>
+      <h5 style="font-weight: 600; color: #3c526b;">로그인 후 구독해야 리뷰 작성이 가능합니다.</h5>
 
 
       <div class="end">
-        <form action="/reviewServlet" method="post">
-          <input type="hidden" name="videoId" value="${videoId}">
-          <input type="hidden" name="action" value="review_search">
-          🔍<input type="text" v-model="content" @keyup.enter="search" id="search" name="reviewSearch"
-            placeholder="제목, 내용으로 검색">
-          <button @click="search">검색</button>
-        </form>
 
 
 
@@ -75,11 +68,17 @@
         class="list"
       >
         <div class="num">{{ review.reviewId }}</div>
-        <div class="subject">
+        <div class="subject" v-if="subscribeCheck.isSubscribed">
           <RouterLink :to="{ name: 'reviewDetail', query: { videoId }, params: { reviewId: review.reviewId } }">
             {{ review.title }}
           </RouterLink>
         </div>
+        <div class="subject" v-else>
+  <p class="locked-message">
+    🔒 구독 후 전체 내용을 확인하실 수 있어요!
+  </p>
+</div>
+
         <div class="writer">{{ review.writer }}</div>
         <div class="click">{{ review.clickCount }}</div>
         <div class="time">{{ review.writedTime }}</div>
@@ -96,6 +95,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { getAllReviews, getSearchReviews } from '@/api/review';
 import { deleteVideo, getVideoDetail, updateClickCount } from '@/api/video'
 import '@/assets/review.css'
+import { useSubscribeCheck } from '@/stores/subscribe';
 
 const route = useRoute();
 const videoId = route.query.videoId;
@@ -103,7 +103,11 @@ const content = ref('');
 const reviews = ref([]);
 const video = ref({});
 const videoUrl = ref('')
+const videoWriter = ref('');
 const router = useRouter();
+const subscribeCheck = useSubscribeCheck();
+
+subscribeCheck.checkSubscribe();
 
 const loadAll = async () => {
   reviews.value = await getAllReviews(videoId);
@@ -119,8 +123,16 @@ const search = async () => {
 
 const getVideo = async () => {
   video.value = await getVideoDetail(videoId);
-  console.log(video.value.url);
   videoUrl.value = video.value.url
+  videoWriter.value = video.value.writerId;
+}
+
+const isPossibleDelete = () => {
+  if(videoWriter.value !== sessionStorage.getItem("id")) {
+    alert("작성자가 아닙니다.")
+  } else {
+    requestDeleteVideo();
+  }
 }
 
 const requestDeleteVideo = async () => {
@@ -134,7 +146,6 @@ onMounted(async () => {
   getVideo();
   if (videoId) {
     updateClickCount(videoId);
-    console.log(videoId);
   } else {
     console.warn('videoId가 정의되지 않았습니다.');
   }
@@ -168,4 +179,12 @@ onMounted(async () => {
 .time {
   white-space: nowrap;
 }
+
+
+.locked-message {
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
 </style>

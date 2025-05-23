@@ -35,6 +35,7 @@ import {useRouter} from 'vue-router'
 import {ref} from "vue";
 import axios from "axios";
 import { useLoginCheck } from '@/stores/logincheck'
+import { useSubscribeCheck } from '@/stores/subscribe'
 
 const userId = ref('')
 const password = ref('')
@@ -42,6 +43,7 @@ const message = ref("")
 
 const router = useRouter()
 const logincCheck = useLoginCheck();
+const subscribeCheck = useSubscribeCheck();
 
 const signup = () => {
   router.push('/user/signup')
@@ -80,7 +82,6 @@ const login = async () => {
     if (res.status === 200) {
       console.log(res.data)
       const token  = res.data.split(".")
-      console.log(token)
 
       // 이렇게 가져오면 한글 다 깨져..
       // const name = JSON.parse(atob(token[1]))["name"]
@@ -89,12 +90,10 @@ const login = async () => {
       const payload = JSON.parse(base64UrlDecode(token[1]));
       const id = payload["id"];
       const name = payload["name"];
-      console.log(id)
-      console.log(name)
-
-      sessionStorage.setItem("access-token", res.data);
+      const isSubscribed = payload["isSubscribed"];
 
       logincCheck.login(id, name, res.data);
+      subscribeCheck.subscribe(isSubscribed);
       router.push('/')
     } else {
       message.value = "아이디나 비밀번호가 일치하지 않습니다."

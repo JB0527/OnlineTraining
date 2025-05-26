@@ -8,6 +8,11 @@ const getVideoList =  async() => {
   return data;
 }
 
+const getVideoListDesc =  async() => {
+  const { data } = await api.get(BASE_URL+"/desc");
+  return data;
+}
+
 const getVideoDetail = async(videoId) => {
   const { data } = await api.get(BASE_URL+"/"+videoId);
   return data;
@@ -38,5 +43,6 @@ export {
     insertVideo,
     updateVideo,
     deleteVideo,
-    updateClickCount
+    updateClickCount,
+    getVideoListDesc
 }

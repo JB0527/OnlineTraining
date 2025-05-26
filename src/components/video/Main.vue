@@ -45,9 +45,9 @@
 
   <!-- 최근 영상 -->
   <div class="container mt-5">
-    <h4 class="section-title">🔥 최근 가장 많이 본 영상</h4>
+    <h4 class="section-title">🔥 조회수 TOP </h4>
     <div class="row g-4">
-      <div class="col-md-4" v-for="(exer, index) in exers.slice(0, 3)" :key="index">
+      <div class="col-md-4" v-for="(exer, index) in exersDesc.slice(0, 3)" :key="index">
         <div class="video-card p-3">
           <div class="ratio ratio-16x9 mb-2">
             <iframe :src="exer.url" allowfullscreen></iframe>
@@ -89,7 +89,7 @@
 </template>
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { getVideoList, insertVideo } from "@/api/video"
+import { getVideoList, insertVideo, getVideoListDesc } from "@/api/video"
 import { useRouter } from 'vue-router'
 import { useLoginCheck } from '@/stores/logincheck'
 import '@/assets/video.css';
@@ -97,6 +97,7 @@ import '@/assets/video.css';
 // 상태 변수들
 const selectedPart = ref("all")
 const exers = ref([])
+const exersDesc = ref([])
 const title = ref("")
 const part = ref("")
 const url = ref("")
@@ -109,6 +110,10 @@ loginCheck.checkLogin();
 // 비디오 리스트 요청
 const requestBoardList = async () => {
   exers.value = await getVideoList()
+}
+
+const requestBoardListDesc = async () => {
+  exersDesc.value = await getVideoListDesc()
 }
 
 const insertVideoModal = async () => {
@@ -127,7 +132,8 @@ const insertVideoModal = async () => {
 }
 
 onMounted(() => {
-  requestBoardList()
+  requestBoardList();
+  requestBoardListDesc();
 })
 
 // 검색 필터링

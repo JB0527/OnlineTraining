@@ -11,7 +11,7 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"> <a class="nav-link" href="/video">영상</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#about-us">AI추천</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="/recommend">AI추천</a> </li>
           <li class="nav-item"> <a class="nav-link" href="/user/subscribe" v-if="!subscribeCheck.isSubscribed & loginCheck.isLoggedIn" @click="subscribePay">구독</a> </li>
           <li class="nav-item"> <a class="nav-link" href="#" v-if="!loginCheck.isLoggedIn" @click="login">로그인</a>
           <a class="nav-link" href="#" v-else @click="logout">로그아웃</a> </li>

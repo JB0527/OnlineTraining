@@ -154,36 +154,141 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.list {
-  display: grid;
-  grid-template-columns: 1fr 6fr 2fr 1fr 4fr; /* 제목(6fr)과 시간(4fr) 널널하게 */
-  padding: 8px 12px;
-  border-bottom: 1px solid #ccc;
+.container-body {
+  background-color: #0a0f1a;
+  color: #e6ecff;
+  padding: 2rem;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
+.review {
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  color: #3399ff;
+}
+
+h1, h2, h5 {
+  color: #3399ff;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+.exercisegif {
+  width: 120px;
+  height: 80px;
+  background-color: #1a2238;
+  border-radius: 10px;
+  background-image: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExamJ6NTA5azl6dTA2MDlocjEyanFrcnV4ODVqeHpnYjFpNzNranZnaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/huyj8anewApiD8cVFu/giphy.gif'); /* 실제 gif 들어갈 자리 */
+  background-size: cover;
+  background-position: center;
+}
+
+.iframe {
+  max-width: 720px;
+  margin: 1rem auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 30px #007bff44;
+}
+
+.container {
+  max-width: 900px;
+  margin-top: 2rem;
+  background: #121a36;
+  border-radius: 14px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 0 30px #3399ff33;
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="submit"], button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 0 8px #007bff88;
+}
+
+input[type="submit"]:hover, button:hover {
+  background-color: #0056cc;
+  transform: translateY(-1px);
+}
+
+h5 {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-weight: 500;
+  color: #a0bfff;
+  font-style: italic;
+}
+
 .list-header {
-  font-weight: bold;
-  background-color: #f0f0f0;
+  background-color: #1b2b50;
+  color: #80bfff;
+  font-weight: 600;
+  padding: 10px 16px;
+  display: grid;
+  grid-template-columns: 1fr 6fr 2fr 1fr 4fr;
+  border-radius: 10px 10px 0 0;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr 6fr 2fr 1fr 4fr;
+  padding: 12px 16px;
+  border-bottom: 1px solid #223355;
+  color: #dce3ff;
+  transition: background-color 0.2s ease;
+}
+
+.list:hover {
+  background-color: #1d2b4a;
+  cursor: pointer;
+  border-radius: 0 0 10px 10px;
 }
 
 .subject a {
-  color: blue;
+  color: #a8ccff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.subject a:hover {
   text-decoration: underline;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: #ffffff;
 }
-
-.time {
-  white-space: nowrap;
-}
-
 
 .locked-message {
-  margin: 0;
-  font-weight: 500;
-  line-height: 1.6;
+  font-weight: 600;
+  color: #66a3ff;
+  font-style: italic;
+  font-size: 0.95rem;
+  padding-left: 4px;
 }
 
+/* 반응형 개선 */
+@media (max-width: 768px) {
+  .list, .list-header {
+    grid-template-columns: 1fr 4fr 2fr 1fr 3fr;
+  }
+
+  .iframe iframe {
+    height: 230px;
+  }
+}
 </style>
+
+

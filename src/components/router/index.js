@@ -4,6 +4,7 @@ import Main from "@/components/video/Main.vue";
 import Login from "@/components/user/Login.vue";
 import UserView from "@/views/UserView.vue";
 import Signup from "@/components/user/Signup.vue";
+import RecommendView from '@/views/RecommendView.vue';
 
 // src/router/index.js
 import ReviewView from '@/views/ReviewView.vue';
@@ -22,6 +23,11 @@ const router = createRouter({
       path: '/',
       name: 'mainView',
       component: MainView
+    },
+    {
+      path: '/recommend',
+      name: 'recommend',
+      component: RecommendView
     },
     {
       path: '/video',

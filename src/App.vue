@@ -9,9 +9,12 @@
 
     <!-- 검색창 -->
     <main>
+<<<<<<< HEAD
       <RecommendView />
       <ChatBot />
       <RouterLink to="/"></RouterLink>
+=======
+>>>>>>> master
       <RouterView />
 
     </main>

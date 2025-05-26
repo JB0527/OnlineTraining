@@ -97,7 +97,6 @@
 </template>
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import '@/assets/main.css'
 import { getVideoList, insertVideo } from "@/api/video"
 import { useRouter } from 'vue-router'
 import { useLoginCheck } from '@/stores/logincheck'

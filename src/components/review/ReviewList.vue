@@ -94,7 +94,6 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getAllReviews, getSearchReviews } from '@/api/review';
 import { deleteVideo, getVideoDetail, updateClickCount } from '@/api/video'
-import '@/assets/review.css'
 import { useSubscribeCheck } from '@/stores/subscribe';
 
 const route = useRoute();

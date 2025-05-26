@@ -10,6 +10,7 @@
     <!-- 검색창 -->
     <main>
       <RecommendView />
+      <ChatBot />
       <RouterLink to="/"></RouterLink>
       <RouterView />
 
@@ -26,5 +27,7 @@
 import Header from '@/components/section/Header.vue';
 import Footer from '@/components/section/Footer.vue';
 import RecommendView from '@/views/RecommendView.vue';
+import ChatBot from './components/ai/chatbot.vue';
 
 </script>
+

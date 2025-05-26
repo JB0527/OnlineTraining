@@ -1,95 +1,87 @@
 <template>
-  <div class="container my-3" id="searchbar" v-if="loginCheck.isLoggedIn">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-default">
-      영상을 등록해보세요!
+  <!-- 로그인 상태일 때만 등록 버튼 표시 -->
+  <div class="container my-4" v-if="loginCheck.isLoggedIn">
+    <button type="button" class="btn btn-primary rounded-pill px-4 py-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
+      🎬 영상 등록하기
     </button>
   </div>
-  <div class="modal fade" id="modal-default" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">나만의 영상을 등록해보아요!</h1>
+
+  <!-- 영상 등록 모달 -->
+  <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content dark-modal">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title" id="uploadModalLabel">나만의 영상 등록</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
-            <!-- 제목 입력 -->
             <div class="mb-3">
               <label for="videoTitle" class="form-label">제목</label>
-              <input type="text" id="videoTitle" v-model="title" name="title" class="form-control" placeholder="제목을 입력하세요">
+              <input type="text" v-model="title" id="videoTitle" class="form-control" placeholder="영상 제목 입력" />
             </div>
-
-            <!-- 운동 부위 선택 -->
             <div class="mb-3">
               <label for="part" class="form-label">운동 부위</label>
-              <select name="part" v-model="part" id="part" class="form-select">
+              <select v-model="part" id="part" class="form-select">
                 <option value="upper">상체</option>
                 <option value="lower">하체</option>
                 <option value="abdomen">복부</option>
                 <option value="whole">전신</option>
               </select>
             </div>
-
-            <!-- URL 입력 -->
             <div class="mb-3">
               <label for="videoUrl" class="form-label">영상 URL</label>
-              <input type="text" v-model="url" id="videoUrl" name="url" class="form-control" placeholder="URL을 입력하세요">
+              <input type="text" v-model="url" id="videoUrl" class="form-control" placeholder="YouTube URL 입력" />
             </div>
           </form>
         </div>
-
-        <div class="modal-footer">
-          <button type="button" id="modalClose" class="btn btn-primary" @click="enroll">등록</button>
-          <button type="button" id="modalClose" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <div class="modal-footer border-top-0 d-flex justify-content-between">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          <button class="btn btn-primary" @click="enroll">등록</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- 최근 영상 -->
-  <div class="container" id="최근영상">
-    <h5 class="fw-semibold text-primary">최근 가장 많이 본 영상</h5>
-    <div class="row">
-      <div class="box col-4" v-for="(exer, index) in exers.slice(0, 3)" :key="index">
-        <div class="ratio ratio-16x9">
-          <iframe :src="exer.url" allowfullscreen></iframe>
-        </div>
-        <div class="row" id="제목">
-          <a :href="`/review?videoId=${exer.id}`">{{ exer.title }}</a>
-        </div>
-        <div class="row" id="조회수">
-          <a :href="`/review?videoId=${exer.id}`">{{ exer.count }}</a>
-        </div>
-        <div class="row" id="작성자">
-          <a :href="`/review?videoId=${exer.id}`">{{ exer.writer }}</a>
+  <div class="container mt-5">
+    <h4 class="section-title">🔥 최근 가장 많이 본 영상</h4>
+    <div class="row g-4">
+      <div class="col-md-4" v-for="(exer, index) in exers.slice(0, 3)" :key="index">
+        <div class="video-card p-3">
+          <div class="ratio ratio-16x9 mb-2">
+            <iframe :src="exer.url" allowfullscreen></iframe>
+          </div>
+          <h6 class="text-light mb-1">
+            <a :href="`/review?videoId=${exer.id}`">{{ exer.title }}</a>
+          </h6>
+          <div class="text-muted small">조회수: {{ exer.count }} · 작성자: {{ exer.writer }}</div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- 운동 부위 선택 -->
-  <div class="container mt-5" id="운동부위">
-    <h5 class="fw-semibold text-primary">운동 부위 선택</h5>
-    <div class="mb-3">
-      <a href="#" @click.prevent="selectedPart = 'all'">전체</a>
-      <a href="#" @click.prevent="selectedPart = 'whole'">전신</a>
-      <a href="#" @click.prevent="selectedPart = 'upper'">상체</a>
-      <a href="#" @click.prevent="selectedPart = 'lower'">하체</a>
-      <a href="#" @click.prevent="selectedPart = 'abdomen'">복부</a>
+  <div class="container mt-5">
+    <h4 class="section-title">🏋️ 운동 부위 선택</h4>
+    <div class="mb-4 d-flex gap-3 flex-wrap">
+      <a href="#" @click.prevent="selectedPart = 'all'" class="filter-btn">전체</a>
+      <a href="#" @click.prevent="selectedPart = 'whole'" class="filter-btn">전신</a>
+      <a href="#" @click.prevent="selectedPart = 'upper'" class="filter-btn">상체</a>
+      <a href="#" @click.prevent="selectedPart = 'lower'" class="filter-btn">하체</a>
+      <a href="#" @click.prevent="selectedPart = 'abdomen'" class="filter-btn">복부</a>
     </div>
-    <div class="row">
-      <div class="box col-4" v-for="(exer, index) in filteredExers" :key="index">
-        <div class="ratio ratio-16x9">
-          <iframe :src="exer.url" allowfullscreen></iframe>
-        </div>
-        <div class="row" id="제목">
-          <a :href="`/review?videoId=${exer.id}`">{{ exer.title }}</a>
-        </div>
-        <div class="row" id="조회수">
-          <a :href="`/review?videoId=${exer.id}`">{{ exer.count }}</a>
-        </div>
-        <div class="row" id="작성자">
-          <a :href="`/review?videoId=${exer.id}`">{{ exer.writer }}</a>
+
+    <div class="row g-4">
+      <div class="col-md-4" v-for="(exer, index) in filteredExers" :key="index">
+        <div class="video-card p-3">
+          <div class="ratio ratio-16x9 mb-2">
+            <iframe :src="exer.url" allowfullscreen></iframe>
+          </div>
+          <h6 class="text-light mb-1">
+            <a :href="`/review?videoId=${exer.id}`">{{ exer.title }}</a>
+          </h6>
+          <div class="text-muted small">조회수: {{ exer.count }} · 작성자: {{ exer.writer }}</div>
         </div>
       </div>
     </div>
@@ -100,6 +92,7 @@ import { ref, computed, onMounted } from 'vue'
 import { getVideoList, insertVideo } from "@/api/video"
 import { useRouter } from 'vue-router'
 import { useLoginCheck } from '@/stores/logincheck'
+import '@/assets/video.css';
 
 // 상태 변수들
 const selectedPart = ref("all")
@@ -156,35 +149,3 @@ const enroll = () => {
 
 
 </script>
-
-
-<style scoped>
-.logo {
-  height: 40px;
-}
-
-.user img {
-  width: 32px;
-  height: 32px;
-}
-
-a {
-  text-decoration: none;
-  margin-right: 10px;
-  color: #3c526b;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-.box {
-  padding: 10px;
-}
-
-#제목 {
-  margin-top: 5px;
-  font-weight: 500;
-  color: #3c526b;
-}
-</style>

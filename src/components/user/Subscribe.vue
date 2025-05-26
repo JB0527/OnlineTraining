@@ -1,16 +1,25 @@
 <template>
-  <div class="container">
-    <div class="card">
-      <h1 class="title">Subscribe</h1>
-      <p class="description">
-        좋아하는 영상의 리뷰를 감상하고, 더 깊이 느껴보세요.<br>
-        단돈 1,000원으로 모든 서비스를 누릴 수 있어요!<br>
-        결제는 네이버페이로만 가능합니다 😊
+  <div class="container d-flex justify-content-center align-items-center py-5">
+    <div class="subscribe-card p-5 text-center">
+      <h1 class="subscribe-title mb-3">🎉 Subscribe</h1>
+      <p class="subscribe-description mb-4">
+        좋아하는 영상의 리뷰를 감상하고,<br>
+        더 깊이 느껴보세요.<br><br>
+        <strong>단돈 1,000원</strong>으로 모든 서비스를 누릴 수 있어요!<br>
+        <span class="text-muted" style="font-size: 0.9rem;">* 결제는 <strong>네이버페이</strong>로만 가능합니다 😊</span>
       </p>
 
-      <div>
-        <img style="cursor:pointer" src="../../assets/images/btn_rd_npaygr_paying.svg" id="naverPayBtn" class="bg-green-500 text-white px-4 py-2 rounded">
+      <!-- 네이버페이 버튼 -->
+      <div class="mb-3">
+        <img
+          style="cursor: pointer; max-width: 200px"
+          src="../../assets/images/btn_rd_npaygr_paying.svg"
+          id="naverPayBtn"
+          alt="네이버페이 결제하기"
+        />
       </div>
+
+      <!-- 네이버페이 스크립트용 버튼 영역 -->
       <div>
         <div id="naverPayButton"></div>
       </div>
@@ -59,62 +68,29 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background: linear-gradient(to bottom right, #dbeafe, #ddd6fe);
-  padding: 20px;
+body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
-.card {
-  background-color: white;
-  padding: 30px 40px;
+.subscribe-card {
+  background-color: #1f1f1f;
   border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  max-width: 400px;
+  max-width: 500px;
   width: 100%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
 }
 
-.title {
-  font-size: 24px;
-  font-weight: bold;
-  color: #1f2937;
-  margin-bottom: 16px;
+.subscribe-title {
+  color: #64b5f6;
+  font-weight: 700;
+  font-size: 2rem;
 }
 
-.description {
-  color: #4b5563;
-  font-size: 16px;
+.subscribe-description {
+  color: #e0e0e0;
+  font-size: 1.1rem;
   line-height: 1.6;
-  margin-bottom: 24px;
-  background-color: #f9fafb;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-
-.subscribe-btn {
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 16px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 100%;
-}
-
-.subscribe-btn:hover {
-  background-color: #2563eb;
-}
-
-.subscribe-btn.disabled {
-  background-color: #9ca3af;
-  cursor: not-allowed;
 }
 </style>

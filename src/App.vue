@@ -9,7 +9,6 @@
 
     <!-- 검색창 -->
     <main>
-      <RecommendView />
       <ChatBot />
       <RouterLink to="/"></RouterLink>
       <RouterView />

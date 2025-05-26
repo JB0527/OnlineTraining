@@ -1,12 +1,12 @@
 <template>
     <div class="container-fluid pl-0 pr-0 bg-img clearfix parallax-window2" data-parallax="scroll"
-        data-image-src="public/images/banner2.jpg">
+        data-image-src="/images/banner2.jpg">
         <div class="container">
             <div class="fh5co-banner-text-box">
                 <div class="quote-box pl-5 pr-5 wow bounceInRight">
                     <h2> Online Training <br><span>몸 관리를 위한 첫 걸음</span> </h2>
                 </div>
-                <a href="#" class="btn text-uppercase btn-outline-danger btn-lg mr-3 mb-3 wow bounceInUp"> 영상 보러 가기 </a>
+                <a href="/video" class="btn text-uppercase btn-outline-danger btn-lg mr-3 mb-3 wow bounceInUp"> 영상 보러 가기 </a>
                 <a href="#" class="btn text-uppercase btn-outline-danger btn-lg mb-3 wow bounceInDown"> AI 추천 받기 </a>
             </div>
         </div>
@@ -38,14 +38,14 @@
                     </p>
                 </div>
                 <div class="col-md-6">
-                    <figure class="wow bounceInDown"> <img src="/public/images/about-img.jpg" alt="gym"
+                    <figure class="wow bounceInDown"> <img src="/images/about-img.jpg" alt="gym"
                             class="img-fluid" /> </figure>
                 </div>
             </div>
         </div>
     </div>
     <div id="about-us" class="container-fluid fh5co-about-us pl-0 pr-0 parallax-window" data-parallax="scroll"
-        data-image-src="images/about-us-bg.jpg">
+        data-image-src="/images/about-us-bg.jpg">
         <div class="container">
             <div class="col-sm-6 offset-sm-6">
                 <h2 class="wow bounceInLeft" data-wow-delay=".25s">ABOUT US</h2>
@@ -60,7 +60,7 @@
         <div class="container-fluid fh5co-content-box">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-5 pr-0"><img src="/public/images/rode-gym.jpg" alt="gym"
+                    <div class="col-md-5 pr-0"><img src="/images/rode-gym.jpg" alt="gym"
                             class="img-fluid wow bounceInLeft" />
                     </div>
                     <div class="col-md-7 pl-0">
@@ -72,7 +72,7 @@
 
                                 </p>
                             </div>
-                            <img src="/public/images/gym-girls.jpg" alt="girls in gym" class="img-fluid" />
+                            <img src="/images/gym-girls.jpg" alt="girls in gym" class="img-fluid" />
                         </div>
                     </div>
                 </div>

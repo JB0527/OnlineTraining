@@ -1,0 +1,82 @@
+body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.section-title {
+  color: #64b5f6;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.video-card {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s ease;
+  margin-bottom: 12px;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+}
+
+a {
+  color: #90caf9;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #bbdefb;
+  text-decoration: underline;
+}
+
+.filter-btn {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.filter-btn:hover {
+  background-color: #2196f3;
+  color: #ffffff;
+}
+
+.modal-content.dark-modal {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border-radius: 12px;
+}
+
+.form-control,
+.form-select {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  color: white;
+}
+
+.btn-primary {
+  background-color: #2196f3;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #1976d2;
+}
+
+.btn-secondary {
+  background-color: #555;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #666;
+}
+
+.btn-close {
+  filter: invert(1);
+}

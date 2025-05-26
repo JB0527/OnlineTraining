@@ -32,35 +32,53 @@ export default {
     }
   },
   mounted() {
-    const userStr = sessionStorage.getItem('userId');
-    if (userStr) {
-        try {
-        const userObj = JSON.parse(userStr);
-        this.userId = userObj.id || userStr; // JSON이 아니어도 그냥 문자열 처리
-        this.isSubscribed = userObj.isSubscribed || (sessionStorage.getItem('isSubscribed') === 'true');
-        } catch {
-        this.userId = userStr;
-        this.isSubscribed = sessionStorage.getItem('isSubscribed') === 'true';
-        }
-    } else {
-        alert('접근 권한이 없습니다. 로그인 후 이용해주세요.');
-        this.isBlocked = true; // 입력 차단
-    }
+    this.checkSession()
 
-    const savedMsgs = JSON.parse(sessionStorage.getItem('chatMessages') || '[]');
-    if (savedMsgs.length) this.messages = savedMsgs;
-
-    const savedCount = parseInt(sessionStorage.getItem('useCount'));
-    if (!isNaN(savedCount)) {
-        this.useCount = savedCount;
-        if (this.useCount >= 3 && !this.isSubscribed) {
-        this.isBlocked = true;
-        this.messages.push({ from: 'bot', text: '⚠️ 무료 사용 횟수를 초과했습니다.' });
+    // 로그인 감지용 인터벌
+    this.sessionInterval = setInterval(() => {
+      const userStr = sessionStorage.getItem('userId')
+      if (userStr && !this.userId) {
+        this.checkSession() // 세션 재확인
+        if (this.useCount < 3 || this.isSubscribed) {
+          this.isBlocked = false
+          this.messages.push({ from: 'bot', text: '✅ 로그인 상태가 확인되어 채팅이 가능합니다.' })
         }
-    }
-    }
-    ,
+      }
+    }, 2000)
+  },
+  beforeUnmount() {
+    clearInterval(this.sessionInterval)
+  },
   methods: {
+    checkSession() {
+      const userStr = sessionStorage.getItem('userId')
+      if (userStr) {
+        try {
+          const userObj = JSON.parse(userStr)
+          this.userId = userObj.id || userStr
+          this.isSubscribed = userObj.isSubscribed || (sessionStorage.getItem('isSubscribed') === 'true')
+        } catch {
+          this.userId = userStr
+          this.isSubscribed = sessionStorage.getItem('isSubscribed') === 'true'
+        }
+      } else {
+        alert('접근 권한이 없습니다. 로그인 후 이용해주세요.')
+        this.isBlocked = true
+        return
+      }
+
+      const savedMsgs = JSON.parse(sessionStorage.getItem('chatMessages') || '[]')
+      if (savedMsgs.length) this.messages = savedMsgs
+
+      const savedCount = parseInt(sessionStorage.getItem('useCount'))
+      if (!isNaN(savedCount)) {
+        this.useCount = savedCount
+        if (this.useCount >= 3 && !this.isSubscribed) {
+          this.isBlocked = true
+          this.messages.push({ from: 'bot', text: '⚠️ 무료 사용 횟수를 초과했습니다.' })
+        }
+      }
+    },
     async sendMessage() {
       if (!this.input.trim() || this.isBlocked) return
 

@@ -21,8 +21,8 @@
               <input type="text" v-model="title" id="videoTitle" class="form-control" placeholder="영상 제목 입력" />
             </div>
             <div class="mb-3">
-              <label for="part" class="form-label">운동 부위</label>
-              <select v-model="part" id="part" class="form-select">
+              <label for="part" class="form-label" style="margin-right: 20px;">운동 부위</label>
+              <select v-model="part" id="part" class="form-select" style="border-radius: 10px;">
                 <option value="upper">상체</option>
                 <option value="lower">하체</option>
                 <option value="abdomen">복부</option>

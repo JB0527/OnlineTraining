@@ -1,28 +1,29 @@
 <template>
   <div class="review-tight-container">
-    <iframe
-      class="review-iframe"
-      :src="video.url"
-      title="YouTube video player"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen>
-    </iframe>
-
-    <div v-if="review" class="review-tight-card">
-      <h2 class="tight-title">{{ review.title }}</h2>
-      <p class="tight-count">조회수: {{ review.clickCount }}</p>
-      <p class="tight-content">{{ review.content }}</p>
-
-      <div class="tight-button-group">
-        <button @click="edit">수정</button>
-        <button @click="remove">삭제</button>
-        <button @click="list">목록</button>
-      </div>
+    <div class="video-wrapper">
+      <iframe class="review-iframe" :src="video.url" title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+      </iframe>
     </div>
-    <div v-else>
-      <p>리뷰를 불러오는 중...</p>
+
+    <div v-if="review" class="review-tight-card bg-black text-white p-4 rounded-4 shadow-sm">
+      <div class="review-header mb-4">
+        <h2 class="tight-title fw-bold text-primary mb-2">{{ review.title }}</h2>
+        <p class="tight-count text-secondary d-flex align-items-center">
+          <i class="bi bi-eye me-1"></i><span>{{ review.clickCount }}회</span>
+        </p>
+      </div>
+
+      <div class="review-body mb-4">
+        <p class="tight-content">{{ review.content }}</p>
+      </div>
+
+      <div class="tight-button-group d-flex flex-wrap gap-2 justify-content-end">
+        <button @click="edit" class="btn btn-outline-warning btn-sm">수정</button>
+        <button @click="remove" class="btn btn-outline-danger btn-sm">삭제</button>
+        <button @click="list" class="btn btn-outline-light btn-sm">목록</button>
+      </div>
     </div>
   </div>
 </template>
@@ -71,7 +72,7 @@ const remove = async () => {
   }
   try {
     await deleteReview(reviewId)
-    await router.push({name: 'reviewList', query: {videoId}})
+    await router.push({ name: 'reviewList', query: { videoId } })
   } catch (e) {
     console.error("삭제 실패", e)
   }
@@ -86,68 +87,66 @@ const list = () => {
   background-color: #0a0f1a;
   color: #e6ecff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 0;
+  padding: 2rem 1rem;
   margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.video-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
 .review-iframe {
-  width: 560px;
+  width: 100%;
+  max-width: 560px;
   height: 315px;
-  margin: 0;
-  padding: 0;
   border: none;
+  border-radius: 0.5rem;
 }
 
 .review-tight-card {
-  padding: 0;
-  margin: 0;
-  width: 560px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  width: 100%;
+  max-width: 800px;
+  word-break: break-word;
+  background-color: #121926;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.tight-title {
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: #66b3ff;
-  margin: 4px 0;
+.review-header {
+  border-bottom: 1px solid #333;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
-.tight-count {
-  font-size: 1.1rem;
-  margin: 2px 0;
-  color: #99bbff;
-}
-
-.tight-content {
-  font-size: 1.15rem;
-  margin: 4px 0;
-  color: #cfd8ff;
-  white-space: pre-wrap;
-}
-
-.tight-button-group {
-  display: flex;
-  gap: 8px;
-  margin-top: 6px;
+.review-body {
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+  font-size: 1.05rem;
+  line-height: 1.6;
 }
 
 .tight-button-group button {
-  font-size: 1rem;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  min-width: 80px;
 }
 
-.tight-button-group button:hover {
-  background-color: #0056cc;
+@media (max-width: 576px) {
+  .tight-title {
+    font-size: 1.25rem;
+  }
+  .tight-content {
+    font-size: 0.95rem;
+  }
+  .tight-button-group {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
 }
 </style>

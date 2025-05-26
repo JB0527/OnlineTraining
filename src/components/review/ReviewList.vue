@@ -1,48 +1,44 @@
-<template>
+f<template>
   <div class="container-body">
     <div class="review">
       <div class="exercisegif"></div>
       <div>
-        <h1>운동영상 리뷰</h1>
+        <h2>{{ video.title }}</h2>
       </div>
       <div class="exercisegif"></div>
     </div>
-    
-    
-  
-    <h2>{{video.title}}</h2>
-    <p>{{video.count }}</p>
-    <p>{{video.writer }}</p>
-    
-    
+
     <hr>
     <div class="iframe">
-      <iframe
-        width="560"
-        height="315"
-        :src="video.url"
-        title="YouTube video player"
-        frameborder="0"
+      <iframe width="560" height="315" :src="video.url" title="YouTube video player" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen>
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
       </iframe>
     </div>
 
-
+    <div class="video-meta d-flex justify-content-between align-items-center mt-2">
+      <div class="view-count d-flex align-items-center text-muted">
+        <i class="bi bi-eye me-1"></i>
+        <span>{{ video.count }}회 | </span>
+      </div>
+      <div class="writer d-flex align-items-center text-light">
+        <i style="margin-left: 10px;" class="bi bi-person me-1"></i>
+        <span > {{ video.writer }}</span>
+      </div>
+    </div>
 
     <hr>
     <div class="container">
 
       <div class="first">
 
-          <RouterLink :to="{ name: 'reviewWrite', query: { videoId } }">
-            <input type="submit" value="리뷰 작성" v-if="subscribeCheck.isSubscribed">
-          </RouterLink>
-          <button @click="isPossibleDelete">영상 삭제</button>
-        </div>
+        <RouterLink :to="{ name: 'reviewWrite', query: { videoId } }">
+          <input type="submit" value="리뷰 작성" v-if="subscribeCheck.isSubscribed">
+        </RouterLink>
+        <button style="margin-left: 10px;" @click="isPossibleDelete">영상 삭제</button>
+      </div>
 
-      <h5 style="font-weight: 600; color: #3c526b;">로그인 후 구독해야 리뷰 작성이 가능합니다.</h5>
+      <h5 style="font-weight: 600; color: #3c526b;" v-if="!subscribeCheck.isSubscribed">로그인 후 구독해야 리뷰 작성이 가능합니다.</h5>
 
 
       <div class="end">
@@ -62,11 +58,7 @@
       </div>
 
       <!-- 리스트 -->
-      <div
-        v-for="review in reviews"
-        :key="review.reviewId"
-        class="list"
-      >
+      <div v-for="review in reviews" :key="review.reviewId" class="list">
         <div class="num">{{ review.reviewId }}</div>
         <div class="subject" v-if="subscribeCheck.isSubscribed">
           <RouterLink :to="{ name: 'reviewDetail', query: { videoId }, params: { reviewId: review.reviewId } }">
@@ -74,10 +66,10 @@
           </RouterLink>
         </div>
         <div class="subject" v-else>
-  <p class="locked-message">
-    🔒 구독 후 전체 내용을 확인하실 수 있어요!
-  </p>
-</div>
+          <p class="locked-message">
+            🔒 구독 후 전체 내용을 확인하실 수 있어요!
+          </p>
+        </div>
 
         <div class="writer">{{ review.writer }}</div>
         <div class="click">{{ review.clickCount }}</div>
@@ -127,7 +119,7 @@ const getVideo = async () => {
 }
 
 const isPossibleDelete = () => {
-  if(videoWriter.value !== sessionStorage.getItem("id")) {
+  if (videoWriter.value !== sessionStorage.getItem("id")) {
     alert("작성자가 아닙니다.")
   } else {
     requestDeleteVideo();
@@ -175,7 +167,9 @@ onMounted(async () => {
   color: #3399ff;
 }
 
-h1, h2, h5 {
+h1,
+h2,
+h5 {
   color: #3399ff;
   margin: 0.5rem 0;
   text-align: center;
@@ -186,7 +180,8 @@ h1, h2, h5 {
   height: 80px;
   background-color: #1a2238;
   border-radius: 10px;
-  background-image: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExamJ6NTA5azl6dTA2MDlocjEyanFrcnV4ODVqeHpnYjFpNzNranZnaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/huyj8anewApiD8cVFu/giphy.gif'); /* 실제 gif 들어갈 자리 */
+  background-image: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExamJ6NTA5azl6dTA2MDlocjEyanFrcnV4ODVqeHpnYjFpNzNranZnaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/huyj8anewApiD8cVFu/giphy.gif');
+  /* 실제 gif 들어갈 자리 */
   background-size: cover;
   background-position: center;
 }
@@ -210,7 +205,8 @@ h1, h2, h5 {
   flex-direction: column;
 }
 
-input[type="submit"], button {
+input[type="submit"],
+button {
   background-color: #007bff;
   border: none;
   color: white;
@@ -222,7 +218,8 @@ input[type="submit"], button {
   box-shadow: 0 0 8px #007bff88;
 }
 
-input[type="submit"]:hover, button:hover {
+input[type="submit"]:hover,
+button:hover {
   background-color: #0056cc;
   transform: translateY(-1px);
 }
@@ -281,7 +278,9 @@ h5 {
 
 /* 반응형 개선 */
 @media (max-width: 768px) {
-  .list, .list-header {
+
+  .list,
+  .list-header {
     grid-template-columns: 1fr 4fr 2fr 1fr 3fr;
   }
 
@@ -290,5 +289,3 @@ h5 {
   }
 }
 </style>
-
-

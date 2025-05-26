@@ -50,7 +50,8 @@
       <div class="col-md-4" v-for="(exer, index) in exersDesc.slice(0, 3)" :key="index">
         <div class="video-card p-3">
           <div class="ratio ratio-16x9 mb-2">
-            <iframe :src="exer.url" allowfullscreen></iframe>
+            <iframe :src="exer.url" allowfullscreen style="filter: blur(10px);"  v-if="!subscribeCheck.isSubscribed"></iframe>
+            <iframe :src="exer.url" allowfullscreen v-else></iframe>
           </div>
           <h6 class="text-light mb-1">
             <a :href="`/review?videoId=${exer.id}`">{{ exer.title }}</a>
@@ -76,7 +77,8 @@
       <div class="col-md-4" v-for="(exer, index) in filteredExers" :key="index">
         <div class="video-card p-3">
           <div class="ratio ratio-16x9 mb-2">
-            <iframe :src="exer.url" allowfullscreen></iframe>
+            <iframe :src="exer.url" allowfullscreen style="filter: blur(10px);" v-if="!subscribeCheck.isSubscribed"></iframe>
+            <iframe :src="exer.url" allowfullscreen v-else></iframe>
           </div>
           <h6 class="text-light mb-1">
             <a :href="`/review?videoId=${exer.id}`">{{ exer.title }}</a>
@@ -92,6 +94,7 @@ import { ref, computed, onMounted } from 'vue'
 import { getVideoList, insertVideo, getVideoListDesc } from "@/api/video"
 import { useRouter } from 'vue-router'
 import { useLoginCheck } from '@/stores/logincheck'
+import { useSubscribeCheck } from '@/stores/subscribe'
 import '@/assets/video.css';
 
 // 상태 변수들
@@ -106,6 +109,9 @@ const router = useRouter()
 
 const loginCheck = useLoginCheck();
 loginCheck.checkLogin();
+
+const subscribeCheck = useSubscribeCheck();
+subscribeCheck.checkSubscribe();
 
 // 비디오 리스트 요청
 const requestBoardList = async () => {

@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { useLoginCheck } from '@/stores/logincheck'
+import { useSubscribeCheck } from '@/stores/subscribe'
 import { chatWithGPT } from '@/api/gpt'
 
 export default {
@@ -24,25 +26,39 @@ export default {
     return {
       input: '',
       messages: [],
-      userId: '',
-      isSubscribed: false,
       useCount: 0,
       isBlocked: false,
       isLoading: false
     }
   },
+  computed: {
+    loginCheck() {
+      return useLoginCheck()
+    },
+    subscribeCheck() {
+      return useSubscribeCheck()
+    },
+    userId() {
+      return this.loginCheck.userId
+    },
+    isSubscribed() {
+      return this.subscribeCheck.isSubscribed
+    }
+  },
   mounted() {
-    this.checkSession()
+    this.loadChatState()
 
-    // 로그인 감지용 인터벌
     this.sessionInterval = setInterval(() => {
-      const userStr = sessionStorage.getItem('userId')
-      if (userStr && !this.userId) {
-        this.checkSession() // 세션 재확인
+      if (this.loginCheck.isLoggedIn && !this.isBlocked) {
+        // 로그인 유지 중이면 차단 해제 가능성 체크
         if (this.useCount < 3 || this.isSubscribed) {
           this.isBlocked = false
-          this.messages.push({ from: 'bot', text: '✅ 로그인 상태가 확인되어 채팅이 가능합니다.' })
+          if (!this.messages.find(m => m.text.includes('채팅이 가능합니다'))) {
+            this.messages.push({ from: 'bot', text: '✅ 로그인 상태가 확인되어 채팅이 가능합니다.' })
+          }
         }
+      } else {
+        this.isBlocked = true
       }
     }, 2000)
   },
@@ -50,35 +66,30 @@ export default {
     clearInterval(this.sessionInterval)
   },
   methods: {
-    checkSession() {
-      const userStr = sessionStorage.getItem('userId')
-      if (userStr) {
-        try {
-          const userObj = JSON.parse(userStr)
-          this.userId = userObj.id || userStr
-          this.isSubscribed = userObj.isSubscribed || (sessionStorage.getItem('isSubscribed') === 'true')
-        } catch {
-          this.userId = userStr
-          this.isSubscribed = sessionStorage.getItem('isSubscribed') === 'true'
-        }
-      } else {
+    loadChatState() {
+      // sessionStorage에서 메시지 및 사용횟수 불러오기
+      const savedMsgs = JSON.parse(sessionStorage.getItem('chatMessages') || '[]')
+      if (savedMsgs.length) this.messages = savedMsgs
+
+      const savedCount = parseInt(sessionStorage.getItem('useCount'))
+      if (!isNaN(savedCount)) this.useCount = savedCount
+
+      // 로그인 안 됐으면 차단
+      if (!this.loginCheck.isLoggedIn) {
         alert('접근 권한이 없습니다. 로그인 후 이용해주세요.')
         this.isBlocked = true
         return
       }
 
-      const savedMsgs = JSON.parse(sessionStorage.getItem('chatMessages') || '[]')
-      if (savedMsgs.length) this.messages = savedMsgs
-
-      const savedCount = parseInt(sessionStorage.getItem('useCount'))
-      if (!isNaN(savedCount)) {
-        this.useCount = savedCount
-        if (this.useCount >= 3 && !this.isSubscribed) {
-          this.isBlocked = true
+      // 무료 사용 횟수 초과시 차단 (구독자는 무제한)
+      if (this.useCount >= 3 && !this.isSubscribed) {
+        this.isBlocked = true
+        if (!this.messages.find(m => m.text.includes('무료 사용 횟수를 초과'))) {
           this.messages.push({ from: 'bot', text: '⚠️ 무료 사용 횟수를 초과했습니다.' })
         }
       }
     },
+
     async sendMessage() {
       if (!this.input.trim() || this.isBlocked) return
 
@@ -112,24 +123,16 @@ export default {
         console.error(err)
         let errorMsg = '⚠️ GPT 호출 중 오류가 발생했습니다.'
         if (err.response) {
-            // OpenAI API에서 응답을 받았지만 오류 상태 (예: 401, 429 등)
-            if (err.response.status === 401) {
-            errorMsg = '❌ 유효하지 않은 API 키입니다.'
-            } else if (err.response.status === 429) {
-            errorMsg = '📈 호출 제한을 초과했습니다. 잠시 후 다시 시도해주세요.'
-            } else {
-            errorMsg = `⚠️ 서버 오류 (${err.response.status})`
-            }
+          if (err.response.status === 401) errorMsg = '❌ 유효하지 않은 API 키입니다.'
+          else if (err.response.status === 429) errorMsg = '📈 호출 제한을 초과했습니다. 잠시 후 다시 시도해주세요.'
+          else errorMsg = `⚠️ 서버 오류 (${err.response.status})`
         } else if (err.request) {
-            // 요청은 보냈지만 응답이 없음
-            errorMsg = '⏱️ GPT 서버로부터 응답이 없습니다. 네트워크를 확인해주세요.'
+          errorMsg = '⏱️ GPT 서버로부터 응답이 없습니다. 네트워크를 확인해주세요.'
         } else {
-            // 그 외 에러
-            errorMsg = `⚠️ 오류 발생: ${err.message}`
+          errorMsg = `⚠️ 오류 발생: ${err.message}`
         }
-
         this.messages.push({ from: 'bot', text: errorMsg })
-        } finally {
+      } finally {
         this.isLoading = false
         this.$nextTick(() => {
           this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight
@@ -165,27 +168,40 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
+
 .messages {
   flex: 1;
   padding: 10px;
   overflow-y: auto;
-  background: #f7f7f7;
+  max-height: 400px;
+  background: #f5f5f5;
 }
+
 .message {
+  display: block;      /* inline-block -> block 으로 변경 */
+  padding: 8px 12px;
   margin: 6px 0;
-  padding: 8px;
-  border-radius: 6px;
-  max-width: 90%;
+  border-radius: 16px;
+  max-width: 80%;
+  word-wrap: break-word;
+  white-space: normal;
+  clear: both;         /* 이전 플로팅 요소 없애기 */
 }
+
 .message.user {
-  background-color: #e1f0ff;
+  background-color: #007bff;
+  color: white;
   align-self: flex-end;
-  text-align: right;
+  margin-left: auto;    /* 오른쪽 정렬 */
+  border-bottom-right-radius: 0;
 }
+
 .message.bot {
-  background-color: #eee;
+  background-color: #e5e5ea;
+  color: black;
   align-self: flex-start;
-  text-align: left;
+  margin-right: auto;    /* 오른쪽 정렬 */
+  border-bottom-left-radius: 0;
 }
 .input-area {
   display: flex;

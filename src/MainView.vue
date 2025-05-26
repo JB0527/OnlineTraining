@@ -7,7 +7,7 @@
                     <h2> Online Training <br><span>몸 관리를 위한 첫 걸음</span> </h2>
                 </div>
                 <a href="/video" class="btn text-uppercase btn-outline-danger btn-lg mr-3 mb-3 wow bounceInUp"> 영상 보러 가기 </a>
-                <a href="#" class="btn text-uppercase btn-outline-danger btn-lg mb-3 wow bounceInDown"> AI 추천 받기 </a>
+                <a href="/recommend" class="btn text-uppercase btn-outline-danger btn-lg mb-3 wow bounceInDown"> AI 추천 받기 </a>
             </div>
         </div>
     </div>

@@ -13,12 +13,18 @@ import ReviewWrite from '@/components/review/ReviewWrite.vue';
 import ReviewUpdate from '@/components/review/ReviewUpdate.vue';
 import Subscribe from '@/components/user/Subscribe.vue';
 import PaymentComplete from '../user/PaymentComplete.vue';
+import MainView from '@/MainView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
+      name: 'mainView',
+      component: MainView
+    },
+    {
+      path: '/video',
       name: 'videoView',
       component: VideoView,
       children: [

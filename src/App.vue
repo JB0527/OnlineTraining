@@ -9,8 +9,6 @@
 
     <!-- 검색창 -->
     <main>
-      <RecommendView />
-      <RouterLink to="/"></RouterLink>
       <RouterView />
 
     </main>

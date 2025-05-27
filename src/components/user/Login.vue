@@ -72,7 +72,7 @@ function base64UrlDecode(str) {
   }
 }
 
-const BASE_URL = "http://localhost:8080/api/v1"
+const BASE_URL = "http://70.12.50.190:8080/api/v1"
 
 const login = async () => {
   await axios.post(BASE_URL + "/user/login", {

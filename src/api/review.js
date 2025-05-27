@@ -1,7 +1,7 @@
 import api from '@/api/index';
 import userApi from '@/api/login';
 
-const API_BASE = 'http://localhost:8080/api/v1/review';
+const API_BASE = 'http://70.12.50.190:8080/api/v1/review';
 
 const getAllReviews =  async(videoId) =>{
   const {data} = await api.get(`${API_BASE}/list/${videoId}`);

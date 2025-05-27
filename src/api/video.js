@@ -1,7 +1,7 @@
 import api from '@/api/index';
 import userApi from '@/api/login';
 // TODO 로그인 필요한 API 접근 시 userApi로 변경바람. -> 비디오 등록 시에 유저 아이디와 이름이 들어가야 결제 시스템 가능할 듯?
-const BASE_URL = "http://localhost:8080/api/v1/video";
+const BASE_URL = "http://70.12.50.190:8080/api/v1/video";
 
 const getVideoList =  async() => {
   const { data } = await api.get(BASE_URL);

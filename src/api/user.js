@@ -1,6 +1,6 @@
 import api from '@/api/index';
 
-const API_BASE = 'http://localhost:8080/api/v1/user';
+const API_BASE = 'http://70.12.50.190:8080/api/v1/user';
 
 const signup =  async(user) =>{
   const { data } = await api.post(`${API_BASE}/signup`, user);

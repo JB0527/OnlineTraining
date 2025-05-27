@@ -53,7 +53,7 @@ onMounted(() => {
           productCount: 1,
           taxScopeAmount: 1000,
           taxExScopeAmount: 0,
-          "returnUrl": "http://localhost:5173/payment/complete"
+          "returnUrl": "http://70.12.50.190:5173/payment/complete"
         })
       } catch (err) {
         console.error('네이버페이 호출 실패:', err)

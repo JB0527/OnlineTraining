@@ -7,7 +7,7 @@ export async function fetchYoutubeLinks(videoTitles) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer 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",
+      Authorization: "Bearer your api key",
     },
     body: JSON.stringify({
       model: "gpt-4",
